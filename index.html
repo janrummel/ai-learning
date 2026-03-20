@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Learning — Three paths. One journey.</title>
+<meta name="description" content="Free, open-source AI learning paths for Knowledge Workers, Product Managers, and Engineers. 107 lessons across 3 structured curricula.">
+<style>
+  :root {
+    --bg: #0d1117; --surface: #161b22; --border: #30363d;
+    --text: #e6edf3; --muted: #7d8590; --accent: #58a6ff;
+    --fluency: #2997FF; --product: #D4734A; --engineer: #E67E22;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro', system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .header {
+    text-align: center; padding: 4rem 2rem 2rem;
+    max-width: 720px; margin: 0 auto;
+  }
+  .header h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .header .subtitle {
+    font-size: 1.15rem; color: var(--muted); line-height: 1.6;
+    max-width: 540px; margin: 0 auto;
+  }
+  .stats {
+    display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .stats span { color: var(--muted); font-size: 0.85rem; }
+  .stats strong { color: var(--text); }
+
+  /* Journey */
+  .journey {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0.5rem; margin: 2.5rem auto 0; max-width: 600px;
+    flex-wrap: wrap;
+  }
+  .journey-step {
+    padding: 0.35rem 0.75rem; border-radius: 6px;
+    font-size: 0.8rem; font-weight: 600;
+  }
+  .journey-arrow { color: var(--muted); font-size: 1.2rem; }
+  .j-fluency { background: rgba(41,151,255,0.15); color: var(--fluency); }
+  .j-product { background: rgba(212,115,74,0.15); color: var(--product); }
+  .j-engineer { background: rgba(230,126,34,0.15); color: var(--engineer); }
+
+  /* Cards */
+  .cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem; max-width: 960px; margin: 3rem auto; padding: 0 2rem;
+  }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 2rem; transition: border-color 0.2s;
+    display: flex; flex-direction: column;
+  }
+  .card:hover { border-color: var(--accent); }
+  .card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .card-level {
+    display: inline-block; padding: 0.2rem 0.6rem; border-radius: 10px;
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; margin-bottom: 0.75rem; width: fit-content;
+  }
+  .level-1 { background: rgba(41,151,255,0.15); color: var(--fluency); }
+  .level-2 { background: rgba(212,115,74,0.15); color: var(--product); }
+  .level-3 { background: rgba(230,126,34,0.15); color: var(--engineer); }
+  .card h2 { font-size: 1.3rem; margin-bottom: 0.4rem; }
+  .card .tagline { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; line-height: 1.5; }
+  .card .meta { color: var(--muted); font-size: 0.8rem; margin-bottom: 1.25rem; }
+  .card .audience {
+    font-size: 0.8rem; color: var(--muted); padding-top: 0.75rem;
+    border-top: 1px solid var(--border); margin-top: auto;
+  }
+  .card .audience strong { color: var(--text); }
+  .card-links { display: flex; gap: 0.75rem; margin-top: 1rem; }
+  .card-links a {
+    display: inline-block; padding: 0.5rem 1rem; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 600; text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .card-links a:hover { opacity: 0.85; }
+  .btn-primary { background: var(--accent); color: var(--bg); }
+  .btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+
+  /* Footer */
+  footer {
+    text-align: center; padding: 3rem 2rem; color: var(--muted); font-size: 0.8rem;
+    border-top: 1px solid var(--border); margin-top: 3rem;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .header h1 { font-size: 1.8rem; }
+    .cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>AI Learning</h1>
+  <p class="subtitle">
+    Three free, open-source learning paths.<br>
+    From understanding AI to building with it.
+  </p>
+  <div class="stats">
+    <span><strong>3</strong> paths</span>
+    <span><strong>107</strong> lessons</span>
+    <span><strong>EN + DE</strong></span>
+    <span><strong>MIT / CC BY-NC-SA</strong></span>
+  </div>
+  <div class="journey">
+    <span class="journey-step j-fluency">Understand</span>
+    <span class="journey-arrow">&rarr;</span>
+    <span class="journey-step j-product">Think</span>
+    <span class="journey-arrow">&rarr;</span>
+    <span class="journey-step j-engineer">Build</span>
+  </div>
+</div>
+
+<div class="cards">
+
+  <div class="card">
+    <div class="card-icon">&#x1F9E0;</div>
+    <span class="card-level level-1">Path 1</span>
+    <h2>AI Fluency</h2>
+    <p class="tagline">From Chat to Competency. Learn to use AI effectively in your daily work.</p>
+    <p class="meta">4 levels &middot; 20 lessons &middot; EN + DE</p>
+    <div class="audience">
+      <strong>For:</strong> Knowledge workers who use AI every day but never learned how.
+    </div>
+    <div class="card-links">
+      <a href="https://janrummel.github.io/ai-fluency/" class="btn-primary">Start learning</a>
+      <a href="https://github.com/janrummel/ai-fluency" class="btn-secondary">GitHub</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-icon">&#x1F9E0;</div>
+    <span class="card-level level-2">Path 2</span>
+    <h2>AI Product Thinking</h2>
+    <p class="tagline">Not another AI hype course. Train decisions, not knowledge.</p>
+    <p class="meta">9 chapters &middot; 46 lessons &middot; EN + DE</p>
+    <div class="audience">
+      <strong>For:</strong> Product managers building or evaluating AI-powered products.
+    </div>
+    <div class="card-links">
+      <a href="https://janrummel.github.io/ai-product-thinking/" class="btn-primary">Start learning</a>
+      <a href="https://github.com/janrummel/ai-product-thinking" class="btn-secondary">GitHub</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-icon">&#x1F680;</div>
+    <span class="card-level level-3">Path 3</span>
+    <h2>Level Up AI</h2>
+    <p class="tagline">From Vibe Coder to AI Engineer. Challenges, boss fights, real code.</p>
+    <p class="meta">9 levels &middot; 41 challenges &middot; EN + DE</p>
+    <div class="audience">
+      <strong>For:</strong> Developers who want to build with AI SDKs, agents, and evals.
+    </div>
+    <div class="card-links">
+      <a href="https://janrummel.github.io/level-up-ai/" class="btn-primary">Start learning</a>
+      <a href="https://github.com/janrummel/level-up-ai" class="btn-secondary">GitHub</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Built by <a href="https://github.com/janrummel">janrummel</a> &middot;
+  Open source on <a href="https://github.com/janrummel/ai-learning">GitHub</a>
+</footer>
+
+</body>
+</html>
