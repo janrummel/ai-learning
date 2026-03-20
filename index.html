@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Learning — Three paths. One journey.</title>
-<meta name="description" content="Free, open-source AI learning paths for Knowledge Workers, Product Managers, and Engineers. 107 lessons across 3 structured curricula.">
+<meta name="description" content="Build your AI career. Three free learning paths — from daily AI use to building AI applications. 107 lessons in English and German.">
 <style>
   :root {
     --bg: #0d1117; --surface: #161b22; --border: #30363d;
@@ -18,165 +18,399 @@
     min-height: 100vh;
   }
 
-  /* Header */
-  .header {
-    text-align: center; padding: 4rem 2rem 2rem;
+  /* Language Switcher */
+  .lang-switch {
+    position: fixed; top: 1rem; right: 1.5rem; z-index: 10;
+    display: flex; gap: 0.25rem; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.2rem;
+  }
+  .lang-btn {
+    padding: 0.3rem 0.6rem; border-radius: 6px; border: none;
+    background: transparent; color: var(--muted); cursor: pointer;
+    font-size: 0.8rem; font-weight: 600; transition: all 0.2s;
+  }
+  .lang-btn.active { background: var(--accent); color: var(--bg); }
+  .lang-btn:hover:not(.active) { color: var(--text); }
+
+  /* Hero */
+  .hero {
+    text-align: center; padding: 4rem 2rem 0;
     max-width: 720px; margin: 0 auto;
   }
-  .header h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 0.5rem; }
-  .header .subtitle {
-    font-size: 1.15rem; color: var(--muted); line-height: 1.6;
-    max-width: 540px; margin: 0 auto;
+  .hero h1 { font-size: 2.6rem; font-weight: 800; line-height: 1.15; margin-bottom: 0.75rem; }
+  .hero .value-prop {
+    font-size: 1.1rem; line-height: 1.7; color: var(--muted);
+    max-width: 560px; margin: 0 auto;
   }
-  .stats {
-    display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem;
-    flex-wrap: wrap;
-  }
-  .stats span { color: var(--muted); font-size: 0.85rem; }
-  .stats strong { color: var(--text); }
+  .hero .value-prop em { color: var(--text); font-style: normal; font-weight: 600; }
 
-  /* Journey */
-  .journey {
-    display: flex; align-items: center; justify-content: center;
-    gap: 0.5rem; margin: 2.5rem auto 0; max-width: 600px;
+  /* Stats bar */
+  .stats {
+    display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.75rem;
     flex-wrap: wrap;
   }
-  .journey-step {
-    padding: 0.35rem 0.75rem; border-radius: 6px;
-    font-size: 0.8rem; font-weight: 600;
+  .stat-item {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0.75rem 1.25rem; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; min-width: 80px;
   }
-  .journey-arrow { color: var(--muted); font-size: 1.2rem; }
-  .j-fluency { background: rgba(41,151,255,0.15); color: var(--fluency); }
-  .j-product { background: rgba(212,115,74,0.15); color: var(--product); }
-  .j-engineer { background: rgba(230,126,34,0.15); color: var(--engineer); }
+  .stat-value { font-size: 1.4rem; font-weight: 800; color: var(--accent); }
+  .stat-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.15rem; }
+
+  /* Wegweiser */
+  .wegweiser {
+    max-width: 580px; margin: 3rem auto; padding: 0 2rem;
+  }
+  .wegweiser h2 {
+    font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem;
+    text-align: center; color: var(--muted);
+  }
+  .choices { display: flex; flex-direction: column; gap: 0.6rem; }
+  .choice {
+    display: flex; align-items: center; gap: 1rem;
+    background: var(--surface); border: 2px solid var(--border);
+    border-radius: 12px; padding: 1rem 1.25rem;
+    cursor: pointer; transition: all 0.25s; text-decoration: none; color: var(--text);
+    text-align: left;
+  }
+  .choice:hover { transform: translateY(-2px); }
+  .choice-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .choice-text { font-size: 0.9rem; line-height: 1.5; }
+  .choice-text strong { display: block; margin-bottom: 0.1rem; font-size: 0.95rem; }
+  .choice-text .choice-meta { color: var(--muted); font-size: 0.75rem; margin-top: 0.2rem; }
+  .choice-a:hover { border-color: var(--fluency); }
+  .choice-b:hover { border-color: var(--product); }
+  .choice-c:hover { border-color: var(--engineer); }
 
   /* Cards */
+  .cards-section { max-width: 960px; margin: 2.5rem auto 0; padding: 0 2rem; }
   .cards {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem; max-width: 960px; margin: 3rem auto; padding: 0 2rem;
+    gap: 1.5rem;
   }
   .card {
     background: var(--surface); border: 1px solid var(--border);
-    border-radius: 12px; padding: 2rem; transition: border-color 0.2s;
+    border-radius: 12px; padding: 1.75rem; transition: border-color 0.2s;
     display: flex; flex-direction: column;
   }
   .card:hover { border-color: var(--accent); }
-  .card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-  .card-level {
+  .card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+  .card-badge {
     display: inline-block; padding: 0.2rem 0.6rem; border-radius: 10px;
-    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.05em; margin-bottom: 0.75rem; width: fit-content;
+    font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
   }
-  .level-1 { background: rgba(41,151,255,0.15); color: var(--fluency); }
-  .level-2 { background: rgba(212,115,74,0.15); color: var(--product); }
-  .level-3 { background: rgba(230,126,34,0.15); color: var(--engineer); }
-  .card h2 { font-size: 1.3rem; margin-bottom: 0.4rem; }
-  .card .tagline { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; line-height: 1.5; }
-  .card .meta { color: var(--muted); font-size: 0.8rem; margin-bottom: 1.25rem; }
-  .card .audience {
-    font-size: 0.8rem; color: var(--muted); padding-top: 0.75rem;
-    border-top: 1px solid var(--border); margin-top: auto;
+  .badge-1 { background: rgba(41,151,255,0.15); color: var(--fluency); }
+  .badge-2 { background: rgba(212,115,74,0.15); color: var(--product); }
+  .badge-3 { background: rgba(230,126,34,0.15); color: var(--engineer); }
+  .card h3 { font-size: 1.2rem; }
+  .card .tagline { color: var(--muted); font-size: 0.85rem; margin-bottom: 0.75rem; line-height: 1.5; }
+  .card .outcome {
+    font-size: 0.82rem; line-height: 1.6; margin-bottom: 0.75rem;
+    padding: 0.65rem 0.75rem; background: rgba(88,166,255,0.05); border-radius: 8px;
+    border-left: 3px solid var(--accent);
   }
-  .card .audience strong { color: var(--text); }
-  .card-links { display: flex; gap: 0.75rem; margin-top: 1rem; }
+  .card .outcome strong { color: var(--accent); display: block; margin-bottom: 0.2rem; }
+  .card .meta { color: var(--muted); font-size: 0.75rem; margin-bottom: 0.75rem; }
+  .card-links { display: flex; gap: 0.75rem; margin-top: auto; }
   .card-links a {
     display: inline-block; padding: 0.5rem 1rem; border-radius: 8px;
-    font-size: 0.85rem; font-weight: 600; text-decoration: none;
-    transition: opacity 0.2s;
+    font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: opacity 0.2s;
   }
   .card-links a:hover { opacity: 0.85; }
   .btn-primary { background: var(--accent); color: var(--bg); }
   .btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
 
+  /* Journey */
+  .journey-section {
+    text-align: center; margin: 3rem auto; max-width: 640px; padding: 0 2rem;
+  }
+  .journey-section h2 {
+    font-size: 0.85rem; color: var(--muted); margin-bottom: 0.75rem;
+    text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;
+  }
+  .journey { display: flex; align-items: center; justify-content: center; gap: 0.4rem; flex-wrap: wrap; }
+  .journey-step { padding: 0.4rem 0.85rem; border-radius: 8px; font-size: 0.8rem; font-weight: 600; }
+  .journey-arrow { color: var(--muted); font-size: 1rem; }
+  .j-fluency { background: rgba(41,151,255,0.15); color: var(--fluency); }
+  .j-product { background: rgba(212,115,74,0.15); color: var(--product); }
+  .j-engineer { background: rgba(230,126,34,0.15); color: var(--engineer); }
+
+  /* Comparison */
+  .comparison {
+    max-width: 640px; margin: 0 auto; padding: 0 2rem 2rem; text-align: center;
+  }
+  .comparison h2 {
+    font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem;
+    text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;
+  }
+  .comparison-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  }
+  .comp-col {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.25rem;
+  }
+  .comp-col h3 { font-size: 0.9rem; margin-bottom: 0.75rem; }
+  .comp-col ul { list-style: none; text-align: left; }
+  .comp-col ul li { font-size: 0.8rem; color: var(--muted); padding: 0.25rem 0; }
+  .comp-col ul li::before { margin-right: 0.4rem; }
+  .comp-paid ul li::before { content: "~"; color: var(--muted); }
+  .comp-here ul li::before { content: "+"; color: var(--accent); font-weight: 700; }
+  .comp-here { border-color: var(--accent); }
+  .comp-here h3 { color: var(--accent); }
+  .price-tag { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .comp-paid .price-tag { color: var(--muted); }
+  .comp-here .price-tag { color: var(--accent); }
+
   /* Footer */
   footer {
-    text-align: center; padding: 3rem 2rem; color: var(--muted); font-size: 0.8rem;
-    border-top: 1px solid var(--border); margin-top: 3rem;
+    text-align: center; padding: 2.5rem 2rem; color: var(--muted); font-size: 0.8rem;
+    border-top: 1px solid var(--border); margin-top: 2rem;
   }
   footer a { color: var(--accent); text-decoration: none; }
+  footer .footer-line { margin-top: 0.35rem; }
+
+  /* Language toggle */
+  [lang="de"] .en, [lang="en"] .de { display: none; }
 
   @media (max-width: 640px) {
-    .header h1 { font-size: 1.8rem; }
+    .hero h1 { font-size: 1.8rem; }
     .cards { grid-template-columns: 1fr; }
+    .comparison-grid { grid-template-columns: 1fr; }
+    .stats { gap: 0.75rem; }
+    .stat-item { min-width: 70px; padding: 0.5rem 0.75rem; }
   }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <h1>AI Learning</h1>
-  <p class="subtitle">
-    Three free, open-source learning paths.<br>
-    From understanding AI to building with it.
+<!-- Language Switcher -->
+<div class="lang-switch">
+  <button class="lang-btn active" onclick="setLang('en')" id="btn-en">EN</button>
+  <button class="lang-btn" onclick="setLang('de')" id="btn-de">DE</button>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>
+    <span class="en">Build your AI career.</span>
+    <span class="de">Deine AI-Karriere beginnt hier.</span>
+  </h1>
+  <p class="value-prop">
+    <span class="en">AI tools cost money. AI knowledge shouldn't.<br>Three structured paths — from first prompt to production agent. <em>Completely free.</em></span>
+    <span class="de">AI-Tools kosten Geld. AI-Wissen sollte es nicht.<br>Drei strukturierte Pfade — vom ersten Prompt bis zum produktiven Agent. <em>Komplett kostenlos.</em></span>
   </p>
   <div class="stats">
-    <span><strong>3</strong> paths</span>
-    <span><strong>107</strong> lessons</span>
-    <span><strong>EN + DE</strong></span>
-    <span><strong>MIT / CC BY-NC-SA</strong></span>
+    <div class="stat-item">
+      <div class="stat-value">3</div>
+      <div class="stat-label"><span class="en">Paths</span><span class="de">Pfade</span></div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">107</div>
+      <div class="stat-label"><span class="en">Lessons</span><span class="de">Lektionen</span></div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">2</div>
+      <div class="stat-label"><span class="en">Languages</span><span class="de">Sprachen</span></div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">0 &euro;</div>
+      <div class="stat-label"><span class="en">Cost</span><span class="de">Kosten</span></div>
+    </div>
   </div>
+</div>
+
+<!-- Wegweiser -->
+<div class="wegweiser">
+  <h2>
+    <span class="en">Where are you today?</span>
+    <span class="de">Wo stehst du gerade?</span>
+  </h2>
+  <div class="choices">
+    <a href="#fluency" class="choice choice-a">
+      <div class="choice-icon">&#x1F4AC;</div>
+      <div class="choice-text">
+        <strong>
+          <span class="en">I use AI for individual tasks, but I lack structure</span>
+          <span class="de">Ich nutze AI fuer einzelne Aufgaben, aber es fehlt die Struktur</span>
+        </strong>
+        <div class="choice-meta">
+          <span class="en">AI Fluency &middot; 20 lessons</span>
+          <span class="de">AI Fluency &middot; 20 Lektionen</span>
+        </div>
+      </div>
+    </a>
+    <a href="#product" class="choice choice-b">
+      <div class="choice-icon">&#x1F9ED;</div>
+      <div class="choice-text">
+        <strong>
+          <span class="en">I understand AI, but decisions — what's worth it, what's hype — are hard</span>
+          <span class="de">Ich verstehe AI, aber Entscheidungen — was lohnt sich, was ist Hype — sind schwierig</span>
+        </strong>
+        <div class="choice-meta">
+          <span class="en">AI Product Thinking &middot; 46 lessons</span>
+          <span class="de">AI Product Thinking &middot; 46 Lektionen</span>
+        </div>
+      </div>
+    </a>
+    <a href="#engineer" class="choice choice-c">
+      <div class="choice-icon">&#x1F6E0;&#xFE0F;</div>
+      <div class="choice-text">
+        <strong>
+          <span class="en">I want to build — agents, automations, my own tools</span>
+          <span class="de">Ich will selbst bauen — Agents, Automationen, eigene Tools</span>
+        </strong>
+        <div class="choice-meta">
+          <span class="en">Level Up AI &middot; 41 challenges</span>
+          <span class="de">Level Up AI &middot; 41 Challenges</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- Cards -->
+<div class="cards-section">
+  <div class="cards">
+
+    <div class="card" id="fluency">
+      <div class="card-header">
+        <span class="card-badge badge-1">Path 1</span>
+        <h3>AI Fluency</h3>
+      </div>
+      <p class="tagline">
+        <span class="en">From Chat to Competency.</span>
+        <span class="de">Vom Chat zur Kompetenz.</span>
+      </p>
+      <div class="outcome">
+        <strong><span class="en">After this:</span><span class="de">Danach kannst du:</span></strong>
+        <span class="en">Write effective prompts, build repeatable workflows, and save hours every week — systematically, not by luck.</span>
+        <span class="de">Systematisch prompten, wiederholbare Workflows bauen und jede Woche Stunden sparen — nicht durch Zufall, sondern durch Methode.</span>
+      </div>
+      <p class="meta">4 levels &middot; 20 lessons &middot; EN + DE</p>
+      <div class="card-links">
+        <a href="https://janrummel.github.io/ai-fluency/" class="btn-primary">
+          <span class="en">Start learning (free)</span><span class="de">Starten (kostenlos)</span>
+        </a>
+        <a href="https://github.com/janrummel/ai-fluency" class="btn-secondary">GitHub</a>
+      </div>
+    </div>
+
+    <div class="card" id="product">
+      <div class="card-header">
+        <span class="card-badge badge-2">Path 2</span>
+        <h3>AI Product Thinking</h3>
+      </div>
+      <p class="tagline">
+        <span class="en">Not another AI hype course.</span>
+        <span class="de">Kein weiterer AI-Hype-Kurs.</span>
+      </p>
+      <div class="outcome">
+        <strong><span class="en">After this:</span><span class="de">Danach kannst du:</span></strong>
+        <span class="en">Spec AI features, evaluate build-vs-buy, and ship AI products your team can actually maintain.</span>
+        <span class="de">AI-Features spezifizieren, Build-vs-Buy bewerten und AI-Produkte liefern, die dein Team auch warten kann.</span>
+      </div>
+      <p class="meta">9 chapters &middot; 46 lessons &middot; EN + DE</p>
+      <div class="card-links">
+        <a href="https://janrummel.github.io/ai-product-thinking/" class="btn-primary">
+          <span class="en">Start learning (free)</span><span class="de">Starten (kostenlos)</span>
+        </a>
+        <a href="https://github.com/janrummel/ai-product-thinking" class="btn-secondary">GitHub</a>
+      </div>
+    </div>
+
+    <div class="card" id="engineer">
+      <div class="card-header">
+        <span class="card-badge badge-3">Path 3</span>
+        <h3>Level Up AI</h3>
+      </div>
+      <p class="tagline">
+        <span class="en">From Vibe Coder to AI Engineer.</span>
+        <span class="de">Vom Vibe Coder zum AI Engineer.</span>
+      </p>
+      <div class="outcome">
+        <strong><span class="en">After this:</span><span class="de">Danach kannst du:</span></strong>
+        <span class="en">Build agents, write evals, and ship AI features — with tests, not prayers.</span>
+        <span class="de">Agents bauen, Evals schreiben und AI-Features liefern — mit Tests, nicht mit Hoffnung.</span>
+      </div>
+      <p class="meta">9 levels &middot; 41 challenges &middot; EN + DE</p>
+      <div class="card-links">
+        <a href="https://janrummel.github.io/level-up-ai/" class="btn-primary">
+          <span class="en">Start learning (free)</span><span class="de">Starten (kostenlos)</span>
+        </a>
+        <a href="https://github.com/janrummel/level-up-ai" class="btn-secondary">GitHub</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Journey -->
+<div class="journey-section">
+  <h2>
+    <span class="en">The journey</span>
+    <span class="de">Die Reise</span>
+  </h2>
   <div class="journey">
-    <span class="journey-step j-fluency">Understand</span>
+    <span class="journey-step j-fluency"><span class="en">Understand</span><span class="de">Verstehen</span></span>
     <span class="journey-arrow">&rarr;</span>
-    <span class="journey-step j-product">Think</span>
+    <span class="journey-step j-product"><span class="en">Decide</span><span class="de">Entscheiden</span></span>
     <span class="journey-arrow">&rarr;</span>
-    <span class="journey-step j-engineer">Build</span>
+    <span class="journey-step j-engineer"><span class="en">Build</span><span class="de">Bauen</span></span>
   </div>
 </div>
 
-<div class="cards">
-
-  <div class="card">
-    <div class="card-icon">&#x1F9E0;</div>
-    <span class="card-level level-1">Path 1</span>
-    <h2>AI Fluency</h2>
-    <p class="tagline">From Chat to Competency. Learn to use AI effectively in your daily work.</p>
-    <p class="meta">4 levels &middot; 20 lessons &middot; EN + DE</p>
-    <div class="audience">
-      <strong>For:</strong> Knowledge workers who use AI every day but never learned how.
+<!-- Comparison -->
+<div class="comparison">
+  <h2>
+    <span class="en">Why this exists</span>
+    <span class="de">Warum es das gibt</span>
+  </h2>
+  <div class="comparison-grid">
+    <div class="comp-col comp-paid">
+      <div class="price-tag">300–500 &euro;</div>
+      <h3><span class="en">Typical AI courses</span><span class="de">Typische AI-Kurse</span></h3>
+      <ul>
+        <li><span class="en">Video-based, passive</span><span class="de">Video-basiert, passiv</span></li>
+        <li><span class="en">Vendor-specific content</span><span class="de">Herstellergebundene Inhalte</span></li>
+        <li><span class="en">Updated quarterly</span><span class="de">Quartalsweise aktualisiert</span></li>
+        <li><span class="en">Closed curriculum</span><span class="de">Geschlossenes Curriculum</span></li>
+      </ul>
     </div>
-    <div class="card-links">
-      <a href="https://janrummel.github.io/ai-fluency/" class="btn-primary">Start learning</a>
-      <a href="https://github.com/janrummel/ai-fluency" class="btn-secondary">GitHub</a>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-icon">&#x1F9E0;</div>
-    <span class="card-level level-2">Path 2</span>
-    <h2>AI Product Thinking</h2>
-    <p class="tagline">Not another AI hype course. Train decisions, not knowledge.</p>
-    <p class="meta">9 chapters &middot; 46 lessons &middot; EN + DE</p>
-    <div class="audience">
-      <strong>For:</strong> Product managers building or evaluating AI-powered products.
-    </div>
-    <div class="card-links">
-      <a href="https://janrummel.github.io/ai-product-thinking/" class="btn-primary">Start learning</a>
-      <a href="https://github.com/janrummel/ai-product-thinking" class="btn-secondary">GitHub</a>
+    <div class="comp-col comp-here">
+      <div class="price-tag">0 &euro;</div>
+      <h3><span class="en">AI Learning</span><span class="de">AI Learning</span></h3>
+      <ul>
+        <li><span class="en">Hands-on, structured</span><span class="de">Praxisnah, strukturiert</span></li>
+        <li><span class="en">Tool-agnostic</span><span class="de">Tool-unabhaengig</span></li>
+        <li><span class="en">Updated weekly (open commits)</span><span class="de">Woechentlich aktualisiert (offene Commits)</span></li>
+        <li><span class="en">Open source — fork, adapt, contribute</span><span class="de">Open Source — forken, anpassen, beitragen</span></li>
+      </ul>
     </div>
   </div>
-
-  <div class="card">
-    <div class="card-icon">&#x1F680;</div>
-    <span class="card-level level-3">Path 3</span>
-    <h2>Level Up AI</h2>
-    <p class="tagline">From Vibe Coder to AI Engineer. Challenges, boss fights, real code.</p>
-    <p class="meta">9 levels &middot; 41 challenges &middot; EN + DE</p>
-    <div class="audience">
-      <strong>For:</strong> Developers who want to build with AI SDKs, agents, and evals.
-    </div>
-    <div class="card-links">
-      <a href="https://janrummel.github.io/level-up-ai/" class="btn-primary">Start learning</a>
-      <a href="https://github.com/janrummel/level-up-ai" class="btn-secondary">GitHub</a>
-    </div>
-  </div>
-
 </div>
 
+<!-- Footer -->
 <footer>
-  Built by <a href="https://github.com/janrummel">janrummel</a> &middot;
-  Open source on <a href="https://github.com/janrummel/ai-learning">GitHub</a>
+  <span class="en">Built by a practitioner, not a platform. <a href="https://github.com/janrummel">janrummel</a></span>
+  <span class="de">Gebaut von einem Praktiker, nicht von einer Plattform. <a href="https://github.com/janrummel">janrummel</a></span>
+  <div class="footer-line">
+    <span class="en">Open source on <a href="https://github.com/janrummel/ai-learning">GitHub</a></span>
+    <span class="de">Open Source auf <a href="https://github.com/janrummel/ai-learning">GitHub</a></span>
+  </div>
 </footer>
+
+<script>
+function setLang(lang) {
+  document.documentElement.lang = lang;
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-de').classList.toggle('active', lang === 'de');
+  localStorage.setItem('ai-learning-lang', lang);
+}
+const saved = localStorage.getItem('ai-learning-lang');
+if (saved) { setLang(saved); }
+else if (navigator.language.startsWith('de')) { setLang('de'); }
+</script>
 
 </body>
 </html>
