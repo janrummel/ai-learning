@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>From Chatbot to AI System</title>
-<meta name="description" content="What an AI-augmented engineering workflow actually looks like — from chatbot to integrated agent system.">
+<meta name="description" content="One engineer built 107 lessons in 4 weeks. This is the system behind it — and how you can build your own.">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
@@ -34,7 +34,6 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -47,7 +46,7 @@
   /* =========== HERO =========== */
   .hero {
     text-align: center;
-    padding: 4rem 2rem 3rem;
+    padding: 5rem 2rem 2rem;
     max-width: 800px;
     margin: 0 auto;
   }
@@ -60,41 +59,35 @@
   }
   .hero .subtitle {
     color: var(--muted); font-size: 1.15rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
   }
 
-  /* Journey bar */
+  /* Journey bar (secondary) */
   .journey-bar {
     display: flex; align-items: center; justify-content: center;
-    gap: 0; margin-bottom: 1rem; flex-wrap: wrap;
+    gap: 0; margin-bottom: 0.75rem; flex-wrap: wrap;
   }
   .journey-step {
-    padding: 0.75rem 1.5rem; border-radius: 0;
-    font-size: 0.9rem; font-weight: 700; cursor: pointer;
+    padding: 0.6rem 1.2rem; border-radius: 0;
+    font-size: 0.8rem; font-weight: 600;
     transition: all 0.3s; border: 1px solid var(--border);
-    position: relative;
+    color: var(--muted);
   }
   .journey-step:first-child { border-radius: 8px 0 0 8px; }
   .journey-step:last-child { border-radius: 0 8px 8px 0; }
-  .journey-step:hover { transform: translateY(-2px); }
-  .journey-step.active { border-color: var(--accent); z-index: 1; }
+  .j-chatbot { background: rgba(248,113,113,0.08); }
+  .j-cli { background: rgba(251,191,36,0.08); }
+  .j-system { background: rgba(34,197,94,0.08); }
 
-  .j-chatbot { background: rgba(248,113,113,0.1); color: var(--red); }
-  .j-chatbot.active { background: rgba(248,113,113,0.25); }
-  .j-cli { background: rgba(251,191,36,0.1); color: var(--amber); }
-  .j-cli.active { background: rgba(251,191,36,0.25); }
-  .j-system { background: rgba(34,197,94,0.1); color: var(--green); }
-  .j-system.active { background: rgba(34,197,94,0.25); }
-
-  .journey-explain {
-    max-width: 600px; margin: 0 auto;
-    padding: 1rem 1.5rem;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 10px; font-size: 0.9rem; color: var(--muted);
-    line-height: 1.7; min-height: 80px;
-    transition: opacity 0.3s;
+  .scroll-hint {
+    color: var(--muted); font-size: 0.8rem;
+    margin-top: 1.5rem; opacity: 0.7;
+    animation: pulse 2s ease-in-out infinite;
   }
-  .journey-explain strong { color: var(--text); }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
 
   /* =========== SECTIONS =========== */
   section {
@@ -102,10 +95,9 @@
     margin: 0 auto;
     padding: 3rem 2rem;
   }
-
   .section-header {
     text-align: center;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
   }
   .section-header h2 {
     font-size: 1.8rem; font-weight: 800;
@@ -115,117 +107,110 @@
     color: var(--muted); font-size: 1rem;
     max-width: 600px; margin: 0 auto;
   }
-
   .section-divider {
     width: 60px; height: 3px;
     margin: 0 auto 2rem;
     border-radius: 2px;
   }
 
-  /* Level badge */
-  .level-badge {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.4rem 1rem; border-radius: 20px;
-    font-size: 0.75rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 1px;
-    margin-bottom: 1rem;
-  }
-  .level-badge.l1 { background: rgba(248,113,113,0.15); color: var(--red); }
-  .level-badge.l2 { background: rgba(251,191,36,0.15); color: var(--amber); }
-  .level-badge.l3 { background: rgba(34,197,94,0.15); color: var(--green); }
-
-  /* =========== LEVEL 1: CHATBOT =========== */
-  .chatbot-grid {
+  /* =========== EVOLUTION GRID =========== */
+  .evolution-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
   }
-
-  .limitation-card {
+  .evo-col {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 1.25rem;
-    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1.5rem;
+    position: relative;
   }
-  .limitation-card .icon {
-    font-size: 1.5rem; flex-shrink: 0; margin-top: 0.1rem;
+  .evo-col .evo-icon {
+    font-size: 1.8rem; margin-bottom: 0.75rem;
   }
-  .limitation-card h4 {
+  .evo-col h3 {
+    font-size: 1rem; font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .evo-col.col-chatbot { border-top: 3px solid var(--red); }
+  .evo-col.col-chatbot h3 { color: var(--red); }
+  .evo-col.col-cli { border-top: 3px solid var(--amber); }
+  .evo-col.col-cli h3 { color: var(--amber); }
+  .evo-col.col-system { border-top: 3px solid var(--green); }
+  .evo-col.col-system h3 { color: var(--green); }
+  .evo-col ul {
+    list-style: none; padding: 0;
+  }
+  .evo-col ul li {
+    font-size: 0.8rem; color: var(--muted);
+    padding: 0.3rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+    line-height: 1.5;
+  }
+  .evo-col ul li::before {
+    content: '';
+    position: absolute; left: 0; top: 0.65rem;
+    width: 6px; height: 6px; border-radius: 50%;
+  }
+  .col-chatbot ul li::before { background: var(--red); }
+  .col-cli ul li::before { background: var(--amber); }
+  .col-system ul li::before { background: var(--green); }
+
+  .jargon {
+    color: var(--muted); font-size: 0.75rem; font-style: italic;
+    display: block; margin-top: 0.75rem; padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+    line-height: 1.5;
+  }
+
+  /* =========== DEMO / PRACTICE =========== */
+  .demo-timeline {
+    position: relative;
+    padding-left: 3rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .demo-timeline::before {
+    content: '';
+    position: absolute; left: 1rem; top: 0; bottom: 0;
+    width: 2px; background: var(--border);
+  }
+  .demo-step {
+    position: relative;
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: border-color 0.3s;
+  }
+  .demo-step:hover { border-color: var(--accent); }
+  .demo-step .step-icon {
+    position: absolute;
+    left: -2.75rem; top: 1rem;
+    width: 28px; height: 28px;
+    background: var(--accent); color: var(--bg);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 800;
+  }
+  .demo-step h4 {
     font-size: 0.9rem; font-weight: 700;
     margin-bottom: 0.3rem;
   }
-  .limitation-card p {
+  .demo-step p {
     font-size: 0.8rem; color: var(--muted); line-height: 1.6;
   }
 
-  .bottleneck-callout {
-    background: rgba(248,113,113,0.08);
-    border: 1px solid rgba(248,113,113,0.3);
-    border-radius: 12px;
-    padding: 1.5rem;
-    text-align: center;
-    font-size: 0.95rem;
-  }
-  .bottleneck-callout strong { color: var(--red); }
-  .bottleneck-callout p { color: var(--muted); margin-top: 0.5rem; font-size: 0.85rem; }
-
-  /* =========== LEVEL 2: CLI =========== */
-  .cli-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  .unlock-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--amber);
-    border-radius: 12px;
-    padding: 1.25rem;
-  }
-  .unlock-card h4 {
-    font-size: 0.9rem; font-weight: 700;
-    margin-bottom: 0.5rem;
-    display: flex; align-items: center; gap: 0.5rem;
-  }
-  .unlock-card p {
-    font-size: 0.8rem; color: var(--muted); line-height: 1.6;
-  }
-  .unlock-card .before-after {
-    display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.5rem;
-    margin-top: 0.75rem; font-size: 0.75rem;
-    align-items: center;
-  }
-  .unlock-card .before {
-    color: var(--red); background: rgba(248,113,113,0.08);
-    padding: 0.4rem 0.6rem; border-radius: 6px; text-align: center;
-  }
-  .unlock-card .arrow { color: var(--muted); }
-  .unlock-card .after {
-    color: var(--green); background: rgba(34,197,94,0.08);
-    padding: 0.4rem 0.6rem; border-radius: 6px; text-align: center;
-  }
-
-  .coworker-callout {
-    background: rgba(251,191,36,0.08);
-    border: 1px solid rgba(251,191,36,0.3);
-    border-radius: 12px;
-    padding: 1.5rem;
-    text-align: center;
-    font-size: 0.95rem;
-  }
-  .coworker-callout strong { color: var(--amber); }
-  .coworker-callout p { color: var(--muted); margin-top: 0.5rem; font-size: 0.85rem; }
-
-  /* =========== LEVEL 3: SYSTEM =========== */
+  /* =========== SYSTEM ARCHITECTURE =========== */
   .system-section {
     margin-bottom: 2.5rem;
   }
   .system-section-header {
     display: flex; align-items: center; gap: 0.75rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.5rem;
   }
   .system-section-header h3 {
     font-size: 1.1rem; font-weight: 700;
@@ -239,6 +224,11 @@
   .tag-blue { background: rgba(88,166,255,0.15); color: var(--accent); }
   .tag-purple { background: rgba(167,139,250,0.15); color: var(--purple); }
   .tag-green { background: rgba(34,197,94,0.15); color: var(--green); }
+
+  .problem-stmt {
+    font-size: 0.85rem; color: var(--muted); font-style: italic;
+    margin-bottom: 1rem;
+  }
 
   /* Clickable box */
   .box {
@@ -268,7 +258,7 @@
     font-size: 0.65rem; color: var(--muted);
     background: rgba(255,255,255,0.05);
     padding: 0.15rem 0.5rem; border-radius: 4px;
-    opacity: 0; transition: opacity 0.3s;
+    opacity: 0.5; transition: opacity 0.3s;
   }
   .box:hover .click-hint { opacity: 1; }
 
@@ -314,38 +304,53 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
-    position: relative;
   }
   .workflow-grid .box { border-top: 3px solid var(--green); }
 
-  .workflow-arrow {
-    position: absolute;
-    top: 50%;
-    color: var(--muted);
-    font-size: 1.5rem;
-    transform: translateY(-50%);
-    pointer-events: none;
-  }
-  .workflow-arrow.a1 { left: calc(33.33% - 0.5rem); }
-  .workflow-arrow.a2 { left: calc(66.66% - 0.5rem); }
-
-  .outputs-grid {
+  /* =========== PROGRESSION TIMELINE =========== */
+  .progression-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
+    position: relative;
   }
-  .outputs-grid .box {
-    border-top: 3px solid var(--green);
-    cursor: default;
+  .progression-row::before {
+    content: '';
+    position: absolute;
+    top: 2rem; left: 5%; right: 5%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--amber), var(--accent), var(--green));
+    z-index: 0;
   }
-  .outputs-grid .box:hover { transform: none; border-color: var(--green); }
+  .prog-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .prog-card .prog-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    margin: 0 auto 0.75rem;
+  }
+  .prog-card h4 {
+    font-size: 0.8rem; font-weight: 700;
+    margin-bottom: 0.3rem;
+    color: var(--text);
+  }
+  .prog-card p {
+    font-size: 0.75rem; color: var(--muted);
+    line-height: 1.5;
+  }
 
   /* =========== RESULTS =========== */
   .results-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
-    margin-bottom: 2rem;
   }
   .result-card {
     background: var(--surface);
@@ -373,7 +378,6 @@
     border: 2px solid var(--accent);
     border-radius: 16px;
     padding: 2.5rem;
-    margin-bottom: 2.5rem;
     text-align: center;
   }
   .start-callout h3 {
@@ -466,26 +470,40 @@
   }
   .cost-compare strong { color: var(--text); }
 
-  /* =========== STATS BAR =========== */
-  .stats-bar {
-    display: flex; justify-content: center; gap: 2.5rem;
-    padding: 2rem;
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    flex-wrap: wrap;
+  /* =========== CTA =========== */
+  .cta-section {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    text-align: center;
   }
-  .stat { text-align: center; }
-  .stat-val { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
-  .stat-lbl {
-    font-size: 0.7rem; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 1px;
-    margin-top: 0.2rem;
+  .cta-section h2 {
+    font-size: 1.8rem; font-weight: 800;
+    margin-bottom: 1rem;
+  }
+  .cta-btn {
+    display: inline-block;
+    padding: 0.9rem 2rem;
+    background: var(--accent);
+    color: var(--bg);
+    font-size: 1rem; font-weight: 700;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.3s;
+    margin-bottom: 1rem;
+    font-family: 'Inter', -apple-system, sans-serif;
+  }
+  .cta-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+  .cta-secondary {
+    font-size: 0.9rem; color: var(--muted);
+    margin-top: 0.5rem;
   }
 
   /* =========== FOOTER =========== */
   .footer {
     text-align: center; padding: 2rem;
-    font-size: 0.75rem; color: var(--muted);
+    font-size: 0.8rem; color: var(--muted);
+    border-top: 1px solid var(--border);
   }
   .footer a { color: var(--accent); text-decoration: none; }
   .footer a:hover { text-decoration: underline; }
@@ -493,24 +511,26 @@
   /* =========== RESPONSIVE =========== */
   @media (max-width: 900px) {
     .hero h1 { font-size: 2rem; }
-    .chatbot-grid, .cli-grid, .results-grid { grid-template-columns: 1fr; }
+    .evolution-grid { grid-template-columns: 1fr; }
     .interfaces-grid { grid-template-columns: 1fr 1fr; }
     .core-grid { grid-template-columns: 1fr; }
     .knowledge-grid { grid-template-columns: 1fr; }
     .workflow-grid { grid-template-columns: 1fr; }
-    .workflow-arrow { display: none; }
-    .outputs-grid { grid-template-columns: 1fr 1fr; }
+    .results-grid { grid-template-columns: 1fr; }
     .steps-row { grid-template-columns: 1fr; }
     .cost-grid { grid-template-columns: 1fr; }
+    .progression-row { grid-template-columns: 1fr 1fr; }
+    .progression-row::before { display: none; }
     .lang-switch { top: 0.75rem; right: 1rem; }
     .lang-btn { padding: 0.4rem 0.7rem; font-size: 0.85rem; }
   }
   @media (max-width: 600px) {
-    .hero { padding: 2rem 1rem; }
+    .hero { padding: 3rem 1rem 1.5rem; }
     section { padding: 2rem 1rem; }
     .hero h1 { font-size: 1.6rem; }
-    .interfaces-grid, .outputs-grid { grid-template-columns: 1fr; }
-    .journey-step { font-size: 0.75rem; padding: 0.5rem 0.8rem; }
+    .interfaces-grid { grid-template-columns: 1fr; }
+    .journey-step { font-size: 0.7rem; padding: 0.4rem 0.6rem; }
+    .progression-row { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -518,8 +538,8 @@
 
 <!-- Back link -->
 <a href="../" style="position:fixed;top:1rem;left:1.5rem;z-index:100;color:var(--muted);text-decoration:none;font-size:0.85rem;font-weight:600;font-family:'Inter',-apple-system,sans-serif;">
-  <span class="en">← Back to courses</span>
-  <span class="de">← Zurück zu den Kursen</span>
+  <span class="en">&larr; Back to courses</span>
+  <span class="de">&larr; Zur&uuml;ck zu den Kursen</span>
 </a>
 
 <!-- Language Switcher -->
@@ -530,125 +550,160 @@
 
 <!-- ==================== HERO ==================== -->
 <div class="hero">
-  <h1><span class="en">From Chatbot to AI System</span><span class="de">Vom Chatbot zum AI-System</span></h1>
-  <p class="subtitle"><span class="en">What an AI-augmented engineering workflow actually looks like</span><span class="de">Wie ein AI-gest&uuml;tzter Engineering-Workflow wirklich aussieht</span></p>
+  <h1>
+    <span class="en">One Engineer. 107 Lessons. 4 Weeks.</span>
+    <span class="de">Ein Ingenieur. 107 Lektionen. 4 Wochen.</span>
+  </h1>
+  <p class="subtitle">
+    <span class="en">This is the system that made it possible &mdash; and how you can build your own.</span>
+    <span class="de">Das ist das System dahinter &mdash; und wie du dein eigenes bauen kannst.</span>
+  </p>
 
   <div class="journey-bar">
-    <span class="journey-step j-chatbot active" onclick="showJourney('chatbot')"><span class="en">Level 1: The Chatbot</span><span class="de">Level 1: Der Chatbot</span></span>
-    <span class="journey-step j-cli" onclick="showJourney('cli')"><span class="en">Level 2: CLI + Agents</span><span class="de">Level 2: CLI + Agents</span></span>
-    <span class="journey-step j-system" onclick="showJourney('system')"><span class="en">Level 3: The Integrated System</span><span class="de">Level 3: Das integrierte System</span></span>
+    <span class="journey-step j-chatbot">Chatbot</span>
+    <span class="journey-step j-cli">
+      <span class="en">CLI + Agents</span>
+      <span class="de">CLI + Agents</span>
+    </span>
+    <span class="journey-step j-system">
+      <span class="en">Integrated System</span>
+      <span class="de">Integriertes System</span>
+    </span>
   </div>
 
-  <div class="journey-explain" id="journey-explain">
-  </div>
+  <p class="scroll-hint">
+    <span class="en">&darr; Scroll to explore</span>
+    <span class="de">&darr; Scrollen um mehr zu erfahren</span>
+  </p>
 </div>
 
-<!-- ==================== LEVEL 1: CHATBOT ==================== -->
-<section id="level-chatbot">
+<!-- ==================== THE EVOLUTION ==================== -->
+<section>
   <div class="section-header">
-    <span class="level-badge l1">Level 1</span>
-    <h2><span class="en">The Chatbot Stage</span><span class="de">Die Chatbot-Phase</span></h2>
-    <p class="section-sub"><span class="en">This is where 95% of AI users are. It works, but you hit the ceiling fast.</span><span class="de">Hier stehen 95% der AI-Nutzer. Es funktioniert, aber man st&ouml;&szlig;t schnell an die Grenze.</span></p>
+    <h2>
+      <span class="en">The Evolution</span>
+      <span class="de">Die Entwicklung</span>
+    </h2>
+    <p class="section-sub">
+      <span class="en">Three levels of working with AI. Most people stay at level one.</span>
+      <span class="de">Drei Stufen der Arbeit mit AI. Die meisten bleiben bei Stufe eins.</span>
+    </p>
   </div>
-  <div class="section-divider" style="background: var(--red);"></div>
+  <div class="section-divider" style="background: linear-gradient(90deg, var(--red), var(--amber), var(--green));"></div>
 
-  <div class="chatbot-grid">
-    <div class="limitation-card">
-      <div class="icon">💬</div>
-      <div>
-        <h4><span class="en">One conversation at a time</span><span class="de">Eine Konversation gleichzeitig</span></h4>
-        <p><span class="en">You can only talk to one AI in one window. Switching tasks means losing context. You can't run two things in parallel.</span><span class="de">Du kannst nur mit einer AI in einem Fenster reden. Aufgaben wechseln hei&szlig;t Kontext verlieren. Zwei Dinge parallel laufen lassen? Geht nicht.</span></p>
-      </div>
+  <div class="evolution-grid">
+    <div class="evo-col col-chatbot">
+      <div class="evo-icon">&#x1F4AC;</div>
+      <h3>Chatbot</h3>
+      <ul>
+        <li><span class="en">Browser-based, one tab at a time</span><span class="de">Browser-basiert, ein Tab gleichzeitig</span></li>
+        <li><span class="en">Copy-paste between AI and your tools</span><span class="de">Copy-Paste zwischen AI und deinen Tools</span></li>
+        <li><span class="en">No memory between sessions</span><span class="de">Kein Ged&auml;chtnis zwischen Sessions</span></li>
+        <li><span class="en">One task at a time, you do all the work</span><span class="de">Eine Aufgabe gleichzeitig, du machst die ganze Arbeit</span></li>
+      </ul>
     </div>
-    <div class="limitation-card">
-      <div class="icon">📋</div>
-      <div>
-        <h4><span class="en">Copy-paste workflow</span><span class="de">Copy-Paste-Workflow</span></h4>
-        <p><span class="en">Chat says "here's the code." You copy it. Paste into your editor. Find it doesn't work. Go back to chat. Repeat. You are the integration layer.</span><span class="de">Chat sagt &bdquo;hier ist der Code.&ldquo; Du kopierst ihn. F&uuml;gst ihn in deinen Editor ein. Stellst fest, dass er nicht funktioniert. Zur&uuml;ck zum Chat. Repeat. Du bist die Integrationsschicht.</span></p>
-      </div>
+    <div class="evo-col col-cli">
+      <div class="evo-icon">&#x2328;&#xFE0F;</div>
+      <h3>
+        <span class="en">CLI + Agents</span>
+        <span class="de">CLI + Agents</span>
+      </h3>
+      <ul>
+        <li><span class="en">Terminal access &mdash; AI reads your files directly</span><span class="de">Terminal-Zugriff &mdash; AI liest deine Dateien direkt</span></li>
+        <li><span class="en">Executes commands, not just suggestions</span><span class="de">F&uuml;hrt Befehle aus, nicht nur Vorschl&auml;ge</span></li>
+        <li><span class="en">Parallel tasks via agents (separate AI sessions that work independently)</span><span class="de">Parallele Aufgaben via Agents (separate AI-Sessions die unabh&auml;ngig arbeiten)</span></li>
+        <li><span class="en">Git (version tracking &mdash; saves every change) integration built in</span><span class="de">Git (Versionskontrolle &mdash; speichert jede &Auml;nderung) direkt integriert</span></li>
+      </ul>
+      <span class="jargon">
+        <span class="en">CLI = command-line interface &mdash; a text-based tool where you type commands instead of clicking. Terminal = the text-based app on your computer that runs CLI tools.</span>
+        <span class="de">CLI = Command-Line Interface &mdash; ein textbasiertes Tool in dem du Befehle tippst statt zu klicken. Terminal = die textbasierte App auf deinem Computer die CLI-Tools ausf&uuml;hrt.</span>
+      </span>
     </div>
-    <div class="limitation-card">
-      <div class="icon">🧠</div>
-      <div>
-        <h4><span class="en">No memory between sessions</span><span class="de">Kein Ged&auml;chtnis zwischen Sessions</span></h4>
-        <p><span class="en">Every conversation starts from scratch. You re-explain your project, your preferences, your constraints. The AI is a stranger every time.</span><span class="de">Jede Konversation startet bei null. Du erkl&auml;rst dein Projekt, deine Pr&auml;ferenzen, deine Constraints neu. Die AI ist jedes Mal ein Fremder.</span></p>
-      </div>
+    <div class="evo-col col-system">
+      <div class="evo-icon">&#x2699;&#xFE0F;</div>
+      <h3>
+        <span class="en">Integrated System</span>
+        <span class="de">Integriertes System</span>
+      </h3>
+      <ul>
+        <li><span class="en">Encoded expertise in config files</span><span class="de">Kodierte Expertise in Config-Dateien</span></li>
+        <li><span class="en">Knowledge layer &mdash; AI knows what you know</span><span class="de">Wissensschicht &mdash; AI wei&szlig; was du wei&szlig;t</span></li>
+        <li><span class="en">Automated quality checks before publishing</span><span class="de">Automatische Qualit&auml;tspr&uuml;fungen vor Ver&ouml;ffentlichung</span></li>
+        <li><span class="en">Cross-session memory, persistent context</span><span class="de">Session-&uuml;bergreifendes Ged&auml;chtnis, persistenter Kontext</span></li>
+      </ul>
     </div>
-    <div class="limitation-card">
-      <div class="icon">🔒</div>
-      <div>
-        <h4><span class="en">No access to your work</span><span class="de">Kein Zugriff auf deine Arbeit</span></h4>
-        <p><span class="en">The AI can't see your code, can't read your files, can't run your tests. It gives generic answers because it lacks specific context.</span><span class="de">Die AI kann deinen Code nicht sehen, deine Dateien nicht lesen, deine Tests nicht ausf&uuml;hren. Sie gibt generische Antworten, weil ihr der spezifische Kontext fehlt.</span></p>
-      </div>
-    </div>
-  </div>
-
-  <div class="bottleneck-callout">
-    <strong><span class="en">The core problem: You are the bottleneck.</span><span class="de">Das Kernproblem: Du bist der Flaschenhals.</span></strong>
-    <p><span class="en">Every task needs you in the loop. You translate between the AI and your tools. You are the memory, the file system, and the quality checker &mdash; all at once.</span><span class="de">Jede Aufgabe braucht dich in der Schleife. Du &uuml;bersetzt zwischen AI und deinen Tools. Du bist das Ged&auml;chtnis, das Dateisystem und der Qualit&auml;tspr&uuml;fer &mdash; alles gleichzeitig.</span></p>
   </div>
 </section>
 
-<!-- ==================== LEVEL 2: CLI + AGENTS ==================== -->
-<section id="level-cli">
+<!-- ==================== HOW IT WORKS IN PRACTICE ==================== -->
+<section>
   <div class="section-header">
-    <span class="level-badge l2">Level 2</span>
-    <h2>CLI + Agents</h2>
-    <p class="section-sub"><span class="en">The step most people skip. The AI moves from a browser tab into your terminal &mdash; and everything changes.</span><span class="de">Der Schritt den die meisten &uuml;berspringen. Die AI wandert vom Browser in dein Terminal &mdash; und alles &auml;ndert sich.</span></p>
+    <h2>
+      <span class="en">How It Works in Practice</span>
+      <span class="de">Wie das in der Praxis aussieht</span>
+    </h2>
+    <p class="section-sub">
+      <span class="en">Building one course lesson, step by step. Here's what the system actually does.</span>
+      <span class="de">Eine Kurslektion bauen, Schritt f&uuml;r Schritt. Das macht das System wirklich.</span>
+    </p>
   </div>
-  <div class="section-divider" style="background: var(--amber);"></div>
+  <div class="section-divider" style="background: var(--accent);"></div>
 
-  <div class="cli-grid">
-    <div class="unlock-card">
-      <h4>📂 <span class="en">File system access</span><span class="de">Dateisystem-Zugriff</span></h4>
-      <p><span class="en">The AI can read your project files, understand your codebase, and make changes directly. No more copy-paste.</span><span class="de">Die AI kann deine Projektdateien lesen, deine Codebase verstehen und direkt &Auml;nderungen vornehmen. Kein Copy-Paste mehr.</span></p>
-      <div class="before-after">
-        <span class="before"><span class="en">"Here's my code..."</span><span class="de">&bdquo;Hier ist mein Code...&ldquo;</span></span>
-        <span class="arrow">&rarr;</span>
-        <span class="after"><span class="en">AI reads it directly</span><span class="de">AI liest direkt</span></span>
-      </div>
+  <div class="demo-timeline">
+    <div class="demo-step">
+      <div class="step-icon">1</div>
+      <h4>&#x1F50D; <span class="en">Define the problem</span><span class="de">Problem definieren</span></h4>
+      <p>
+        <span class="en">The config file triggers the "clarity" workflow. The AI asks: What's the topic? Who's the audience? What should they learn? No output before the problem is clear.</span>
+        <span class="de">Die Config-Datei triggert den "Kl&auml;ren"-Workflow. Die AI fragt: Was ist das Thema? Wer ist die Zielgruppe? Was sollen sie lernen? Kein Output bevor das Problem klar ist.</span>
+      </p>
     </div>
-    <div class="unlock-card">
-      <h4>⚡ <span class="en">Execute, don't suggest</span><span class="de">Ausf&uuml;hren, nicht vorschlagen</span></h4>
-      <p><span class="en">Instead of "try running this command," the AI runs it. It sees the error. It fixes it. You review the result.</span><span class="de">Statt &bdquo;probier mal diesen Befehl&ldquo; f&uuml;hrt die AI ihn aus. Sie sieht den Fehler. Sie fixt ihn. Du reviewst das Ergebnis.</span></p>
-      <div class="before-after">
-        <span class="before"><span class="en">"Try this fix..."</span><span class="de">&bdquo;Probier diesen Fix...&ldquo;</span></span>
-        <span class="arrow">&rarr;</span>
-        <span class="after"><span class="en">AI fixes + tests it</span><span class="de">AI fixt + testet</span></span>
-      </div>
+    <div class="demo-step">
+      <div class="step-icon">2</div>
+      <h4>&#x1F4DA; <span class="en">Research</span><span class="de">Recherche</span></h4>
+      <p>
+        <span class="en">The system checks existing knowledge bases first, then searches the web. Sources are tracked automatically. No duplicate research, no lost references.</span>
+        <span class="de">Das System pr&uuml;ft erst vorhandene Wissensbasen, dann sucht es im Web. Quellen werden automatisch erfasst. Keine doppelte Recherche, keine verlorenen Referenzen.</span>
+      </p>
     </div>
-    <div class="unlock-card">
-      <h4>🔀 Git Integration</h4>
-      <p><span class="en">The AI creates branches, commits code, opens pull requests. Version control becomes part of the conversation.</span><span class="de">Die AI erstellt Branches, committet Code, &ouml;ffnet Pull Requests. Versionskontrolle wird Teil der Konversation.</span></p>
-      <div class="before-after">
-        <span class="before"><span class="en">Manual git workflow</span><span class="de">Manueller Git-Workflow</span></span>
-        <span class="arrow">&rarr;</span>
-        <span class="after">"Commit this fix"</span>
-      </div>
+    <div class="demo-step">
+      <div class="step-icon">3</div>
+      <h4>&#x270D;&#xFE0F; <span class="en">Write</span><span class="de">Schreiben</span></h4>
+      <p>
+        <span class="en">The AI drafts the lesson following encoded templates and style rules. Consistent tone, structure, and depth &mdash; because the config file defines what "good" looks like.</span>
+        <span class="de">Die AI entwirft die Lektion nach kodierten Templates und Stil-Regeln. Konsistenter Ton, Struktur und Tiefe &mdash; weil die Config-Datei definiert wie "gut" aussieht.</span>
+      </p>
     </div>
-    <div class="unlock-card">
-      <h4>🤖 <span class="en">Parallel agents</span><span class="de">Parallele Agents</span></h4>
-      <p><span class="en">Run multiple AI agents simultaneously. One writes tests while another refactors code. One researches while another builds.</span><span class="de">Mehrere AI-Agents gleichzeitig laufen lassen. Einer schreibt Tests w&auml;hrend ein anderer Code refactored. Einer recherchiert w&auml;hrend ein anderer baut.</span></p>
-      <div class="before-after">
-        <span class="before">1 Chat = 1 Task</span>
-        <span class="arrow">&rarr;</span>
-        <span class="after">5 Agents, 5 Tasks</span>
-      </div>
+    <div class="demo-step">
+      <div class="step-icon">4</div>
+      <h4>&#x2705; <span class="en">Quality check</span><span class="de">Qualit&auml;tspr&uuml;fung</span></h4>
+      <p>
+        <span class="en">Automated fact-checking, source verification, consistency review across all lessons. The system catches errors you'd miss after hours of writing.</span>
+        <span class="de">Automatischer Faktencheck, Quellenverifikation, Konsistenzpr&uuml;fung &uuml;ber alle Lektionen. Das System f&auml;ngt Fehler die dir nach Stunden des Schreibens entgehen.</span>
+      </p>
     </div>
-  </div>
-
-  <div class="coworker-callout">
-    <strong><span class="en">The shift: The AI stops being a chatbot and becomes a coworker.</span><span class="de">Der Wendepunkt: Die AI h&ouml;rt auf ein Chatbot zu sein und wird zum Kollegen.</span></strong>
-    <p><span class="en">It can see your code, run your tests, and make changes. You move from "operator" to "reviewer."</span><span class="de">Sie kann deinen Code sehen, deine Tests ausf&uuml;hren und &Auml;nderungen vornehmen. Du wechselst vom &bdquo;Bediener&ldquo; zum &bdquo;Reviewer&ldquo;.</span></p>
+    <div class="demo-step">
+      <div class="step-icon">5</div>
+      <h4>&#x1F680; <span class="en">Publish</span><span class="de">Ver&ouml;ffentlichen</span></h4>
+      <p>
+        <span class="en">Git commit, deploy to GitHub Pages, live in seconds. One command, not a 12-step deployment checklist.</span>
+        <span class="de">Git-Commit, Deploy auf GitHub Pages, in Sekunden live. Ein Befehl, keine 12-Schritte-Deployment-Checkliste.</span>
+      </p>
+    </div>
   </div>
 </section>
 
-<!-- ==================== LEVEL 3: INTEGRATED SYSTEM ==================== -->
+<!-- ==================== SYSTEM ARCHITECTURE ==================== -->
 <section id="level-system">
   <div class="section-header">
-    <span class="level-badge l3">Level 3</span>
-    <h2><span class="en">The Integrated System</span><span class="de">Das integrierte System</span></h2>
-    <p class="section-sub"><span class="en">Where it gets interesting. Not just tools, but a system where every piece exists for a reason.</span><span class="de">Wo es spannend wird. Nicht einfach Tools, sondern ein System in dem jedes Teil aus einem Grund existiert.</span></p>
+    <h2>
+      <span class="en">The System Architecture</span>
+      <span class="de">Die System-Architektur</span>
+    </h2>
+    <p class="section-sub">
+      <span class="en">Every component exists because a real problem demanded it. Click any box to see why.</span>
+      <span class="de">Jede Komponente existiert weil ein echtes Problem sie erfordert hat. Klick auf eine Box um zu sehen warum.</span>
+    </p>
   </div>
   <div class="section-divider" style="background: var(--green);"></div>
 
@@ -658,6 +713,10 @@
       <h3><span class="en">Interfaces</span><span class="de">Schnittstellen</span></h3>
       <span class="tag tag-amber"><span class="en">How you interact</span><span class="de">Wie du interagierst</span></span>
     </div>
+    <p class="problem-stmt">
+      <span class="en">Different contexts need different tools.</span>
+      <span class="de">Verschiedene Kontexte brauchen verschiedene Tools.</span>
+    </p>
     <div class="interfaces-grid">
       <div class="box" onclick="toggleWhy(this)">
         <span class="click-hint"><span class="en">click for why</span><span class="de">klick f&uuml;r warum</span></span>
@@ -665,7 +724,7 @@
         <p class="summary"><span class="en">Primary workspace. Code, agents, file editing, git.</span><span class="de">Prim&auml;rer Arbeitsplatz. Code, Agents, Dateibearbeitung, Git.</span></p>
         <div class="why-panel">
           <div class="why-label"><span class="en">Why this exists</span><span class="de">Warum das existiert</span></div>
-          <p class="why-text"><span class="en">The terminal is where code lives. An AI that works in the terminal has direct access to your project, your tools, and your workflow. No translation layer needed.</span><span class="de">Das Terminal ist wo Code lebt. Eine AI die im Terminal arbeitet hat direkten Zugriff auf dein Projekt, deine Tools und deinen Workflow. Keine &Uuml;bersetzungsschicht n&ouml;tig.</span></p>
+          <p class="why-text"><span class="en">The terminal (the text-based app on your computer) is where code lives. An AI that works in the terminal has direct access to your project, your tools, and your workflow. No translation layer needed.</span><span class="de">Das Terminal (die textbasierte App auf deinem Computer) ist wo Code lebt. Eine AI die im Terminal arbeitet hat direkten Zugriff auf dein Projekt, deine Tools und deinen Workflow. Keine &Uuml;bersetzungsschicht n&ouml;tig.</span></p>
         </div>
       </div>
       <div class="box" onclick="toggleWhy(this)">
@@ -674,7 +733,7 @@
         <p class="summary"><span class="en">Research, exploration, long conversations.</span><span class="de">Recherche, Exploration, lange Gespr&auml;che.</span></p>
         <div class="why-panel">
           <div class="why-label"><span class="en">Why this exists</span><span class="de">Warum das existiert</span></div>
-          <p class="why-text"><span class="en">Some tasks need a different mode of thinking. Research, brainstorming, and deep exploration work better in a web interface where you can scroll, read, and reflect without the pressure of a command line.</span><span class="de">Manche Aufgaben brauchen einen anderen Denkmodus. Recherche, Brainstorming und tiefe Exploration funktionieren besser in einem Web-Interface wo man scrollen, lesen und reflektieren kann &mdash; ohne den Druck einer Kommandozeile.</span></p>
+          <p class="why-text"><span class="en">Some tasks need a different mode. Research and brainstorming work better in a web interface where you can scroll, read, and reflect.</span><span class="de">Manche Aufgaben brauchen einen anderen Modus. Recherche und Brainstorming funktionieren besser in einem Web-Interface wo man scrollen, lesen und reflektieren kann.</span></p>
         </div>
       </div>
       <div class="box" onclick="toggleWhy(this)">
@@ -683,7 +742,7 @@
         <p class="summary"><span class="en">Quick capture, voice mode, thinking on the go.</span><span class="de">Schnell festhalten, Voice-Modus, unterwegs denken.</span></p>
         <div class="why-panel">
           <div class="why-label"><span class="en">Why this exists</span><span class="de">Warum das existiert</span></div>
-          <p class="why-text"><span class="en">Ideas don't wait for your desk. A mobile interface lets you capture thoughts, explore questions via voice, and prepare tasks before you sit down to work. Different contexts need different tools.</span><span class="de">Ideen warten nicht auf deinen Schreibtisch. Ein mobiles Interface l&auml;sst dich Gedanken festhalten, Fragen per Sprache erkunden und Aufgaben vorbereiten bevor du dich an die Arbeit setzt. Verschiedene Kontexte brauchen verschiedene Tools.</span></p>
+          <p class="why-text"><span class="en">Ideas don't wait for your desk. Mobile lets you capture thoughts and prepare tasks before you sit down to work.</span><span class="de">Ideen warten nicht auf deinen Schreibtisch. Mobil kannst du Gedanken festhalten und Aufgaben vorbereiten.</span></p>
         </div>
       </div>
       <div class="box" onclick="toggleWhy(this)">
@@ -692,7 +751,7 @@
         <p class="summary"><span class="en">Background automation, always-on agents.</span><span class="de">Hintergrund-Automatisierung, Always-on Agents.</span></p>
         <div class="why-panel">
           <div class="why-label"><span class="en">Why this exists</span><span class="de">Warum das existiert</span></div>
-          <p class="why-text"><span class="en">Some tasks take hours. A dedicated server runs background agents, monitoring, and long operations while you sleep or work on something else. It's the night shift.</span><span class="de">Manche Aufgaben dauern Stunden. Ein dedizierter Server l&auml;sst Background-Agents, Monitoring und lange Operationen laufen w&auml;hrend du schl&auml;fst oder an etwas anderem arbeitest. Die Nachtschicht.</span></p>
+          <p class="why-text"><span class="en">Some tasks take hours. A server runs background agents and long operations while you sleep or work on something else.</span><span class="de">Manche Aufgaben dauern Stunden. Ein Server l&auml;sst Background-Agents und lange Operationen laufen w&auml;hrend du schl&auml;fst.</span></p>
         </div>
       </div>
     </div>
@@ -704,14 +763,18 @@
       <h3><span class="en">System Core</span><span class="de">System-Kern</span></h3>
       <span class="tag tag-blue"><span class="en">How it behaves</span><span class="de">Wie es sich verh&auml;lt</span></span>
     </div>
+    <p class="problem-stmt">
+      <span class="en">Without instructions, every session starts from zero.</span>
+      <span class="de">Ohne Anweisungen startet jede Session bei null.</span>
+    </p>
     <div class="core-grid">
       <div class="box" onclick="toggleWhy(this)">
         <span class="click-hint"><span class="en">click for why</span><span class="de">klick f&uuml;r warum</span></span>
         <h4>&#x1F4CB; <span class="en">Configuration File</span><span class="de">Konfigurationsdatei</span></h4>
-        <p class="summary"><span class="en">The AI's operating manual. Workflow, rules, quality standards, guard rails.</span><span class="de">Das Betriebshandbuch der AI. Workflow, Regeln, Qualit&auml;tsstandards, Leitplanken.</span></p>
+        <p class="summary"><span class="en">The AI's operating manual (CLAUDE.md, or GEMINI.md, .cursorrules, etc.). Workflow, rules, quality standards, guard rails.</span><span class="de">Das Betriebshandbuch der AI (CLAUDE.md, oder GEMINI.md, .cursorrules, etc.). Workflow, Regeln, Qualit&auml;tsstandards, Leitplanken.</span></p>
         <div class="why-panel">
           <div class="why-label"><span class="en">Why this exists</span><span class="de">Warum das existiert</span></div>
-          <p class="why-text"><span class="en">Without instructions, every session starts from zero. The AI doesn't know your workflow, your quality standards, or your rules. A configuration file (like CLAUDE.md) is loaded at startup and makes the AI behave consistently &mdash; same process, same standards, every time. It's the difference between "using a chatbot" and "running a system."</span><span class="de">Ohne Anweisungen startet jede Session bei null. Die AI kennt weder deinen Workflow, noch deine Qualit&auml;tsstandards, noch deine Regeln. Eine Konfigurationsdatei (wie CLAUDE.md) wird beim Start geladen und sorgt daf&uuml;r dass die AI sich konsistent verh&auml;lt &mdash; gleicher Prozess, gleiche Standards, jedes Mal. Das ist der Unterschied zwischen &bdquo;einen Chatbot nutzen&ldquo; und &bdquo;ein System betreiben&ldquo;.</span></p>
+          <p class="why-text"><span class="en">A configuration file (CLAUDE.md, or GEMINI.md, .cursorrules, etc.) is loaded at startup and makes the AI behave consistently &mdash; same process, same standards, every time. It's the difference between "using a chatbot" and "running a system."</span><span class="de">Eine Konfigurationsdatei (CLAUDE.md, oder GEMINI.md, .cursorrules, etc.) wird beim Start geladen und sorgt daf&uuml;r dass die AI sich konsistent verh&auml;lt &mdash; gleicher Prozess, gleiche Standards, jedes Mal. Das ist der Unterschied zwischen &bdquo;einen Chatbot nutzen&ldquo; und &bdquo;ein System betreiben&ldquo;.</span></p>
         </div>
       </div>
       <div class="box" onclick="toggleWhy(this)">
@@ -720,7 +783,7 @@
         <p class="summary"><span class="en">Reusable workflows. Research, writing, analysis, quality checks &mdash; encoded once, used everywhere.</span><span class="de">Wiederverwendbare Workflows. Recherche, Schreiben, Analyse, Qualit&auml;tspr&uuml;fungen &mdash; einmal kodiert, &uuml;berall genutzt.</span></p>
         <div class="why-panel">
           <div class="why-label"><span class="en">Why this exists</span><span class="de">Warum das existiert</span></div>
-          <p class="why-text"><span class="en">Instead of explaining your process every time ("first check sources, then verify facts, then write the summary..."), you encode it once as a skill. The AI follows the same steps you would &mdash; consistently and thoroughly. Skills are your expertise made reusable.</span><span class="de">Statt deinen Prozess jedes Mal neu zu erkl&auml;ren (&bdquo;erst Quellen pr&uuml;fen, dann Fakten verifizieren, dann die Zusammenfassung schreiben...&ldquo;), kodierst du ihn einmal als Skill. Die AI folgt denselben Schritten die du gehen w&uuml;rdest &mdash; konsistent und gr&uuml;ndlich. Skills sind deine Expertise, wiederverwendbar gemacht.</span></p>
+          <p class="why-text"><span class="en">Instead of explaining your process every time, you encode it once as a reusable workflow template (in any format your tool supports). The AI follows the same steps you would &mdash; consistently and thoroughly. Skills are your expertise made reusable.</span><span class="de">Statt deinen Prozess jedes Mal neu zu erkl&auml;ren, kodierst du ihn einmal als wiederverwendbares Workflow-Template (in jedem Format das dein Tool unterst&uuml;tzt). Die AI folgt denselben Schritten die du gehen w&uuml;rdest &mdash; konsistent und gr&uuml;ndlich. Skills sind deine Expertise, wiederverwendbar gemacht.</span></p>
         </div>
       </div>
       <div class="box" onclick="toggleWhy(this)">
@@ -729,16 +792,16 @@
         <p class="summary"><span class="en">Project states, priorities, decisions. Tracks what's open, what's done, and why.</span><span class="de">Projektzust&auml;nde, Priorit&auml;ten, Entscheidungen. Trackt was offen ist, was erledigt ist und warum.</span></p>
         <div class="why-panel">
           <div class="why-label"><span class="en">Why this exists</span><span class="de">Warum das existiert</span></div>
-          <p class="why-text"><span class="en">Projects span multiple sessions &mdash; sometimes weeks or months. Without state tracking, you re-explain context every time you sit down. A project management layer keeps todos, decisions, and progress across sessions so you pick up exactly where you left off.</span><span class="de">Projekte erstrecken sich &uuml;ber mehrere Sessions &mdash; manchmal Wochen oder Monate. Ohne State-Tracking erkl&auml;rst du den Kontext jedes Mal neu wenn du dich hinsetzt. Eine Projektmanagement-Schicht h&auml;lt Todos, Entscheidungen und Fortschritt &uuml;ber Sessions hinweg, damit du genau da weitermachst wo du aufgeh&ouml;rt hast.</span></p>
+          <p class="why-text"><span class="en">Projects span weeks or months. Without state tracking, you re-explain context every time. A project layer keeps todos, decisions, and progress across sessions so you pick up exactly where you left off.</span><span class="de">Projekte erstrecken sich &uuml;ber Wochen oder Monate. Ohne State-Tracking erkl&auml;rst du den Kontext jedes Mal neu. Eine Projektschicht h&auml;lt Todos, Entscheidungen und Fortschritt &uuml;ber Sessions hinweg.</span></p>
         </div>
       </div>
       <div class="box" onclick="toggleWhy(this)">
         <span class="click-hint"><span class="en">click for why</span><span class="de">klick f&uuml;r warum</span></span>
         <h4>&#x1F916; <span class="en">Parallel Agents</span><span class="de">Parallele Agents</span></h4>
-        <p class="summary"><span class="en">Multiple agents working simultaneously on independent tasks. An AI team, not a single chatbot.</span><span class="de">Mehrere Agents die gleichzeitig an unabh&auml;ngigen Aufgaben arbeiten. Ein AI-Team, nicht ein einzelner Chatbot.</span></p>
+        <p class="summary"><span class="en">Multiple agents working simultaneously. An AI team, not a single chatbot.</span><span class="de">Mehrere Agents die gleichzeitig arbeiten. Ein AI-Team, nicht ein einzelner Chatbot.</span></p>
         <div class="why-panel">
           <div class="why-label"><span class="en">Why this exists</span><span class="de">Warum das existiert</span></div>
-          <p class="why-text"><span class="en">One agent is a chatbot. Multiple agents working simultaneously is a team. Need to fix tests in 3 repositories? Send 3 agents. Need research and implementation in parallel? Two agents. The bottleneck shifts from "how fast can one AI respond" to "how many tasks can I define clearly."</span><span class="de">Ein Agent ist ein Chatbot. Mehrere Agents die gleichzeitig arbeiten sind ein Team. Tests in 3 Repositories fixen? Schick 3 Agents. Recherche und Implementierung parallel? Zwei Agents. Der Flaschenhals verschiebt sich von &bdquo;wie schnell kann eine AI antworten&ldquo; zu &bdquo;wie viele Aufgaben kann ich klar definieren&ldquo;.</span></p>
+          <p class="why-text"><span class="en">One agent is a chatbot. Multiple agents working simultaneously is a team. The bottleneck shifts from "how fast can one AI respond" to "how many tasks can I define clearly."</span><span class="de">Ein Agent ist ein Chatbot. Mehrere Agents die gleichzeitig arbeiten sind ein Team. Der Flaschenhals verschiebt sich von &bdquo;wie schnell kann eine AI antworten&ldquo; zu &bdquo;wie viele Aufgaben kann ich klar definieren&ldquo;.</span></p>
         </div>
       </div>
     </div>
@@ -750,14 +813,18 @@
       <h3><span class="en">Knowledge Layer</span><span class="de">Wissensschicht</span></h3>
       <span class="tag tag-purple"><span class="en">What it knows</span><span class="de">Was es wei&szlig;</span></span>
     </div>
+    <p class="problem-stmt">
+      <span class="en">The AI should know what you already know.</span>
+      <span class="de">Die AI sollte wissen was du bereits wei&szlig;t.</span>
+    </p>
     <div class="knowledge-grid">
       <div class="box" onclick="toggleWhy(this)">
         <span class="click-hint"><span class="en">click for why</span><span class="de">klick f&uuml;r warum</span></span>
         <h4>&#x1F4DA; <span class="en">Knowledge Bases</span><span class="de">Wissensbasen</span></h4>
-        <p class="summary"><span class="en">Your notes, docs, and research &mdash; connected via MCP so the AI can search them.</span><span class="de">Deine Notizen, Docs und Recherchen &mdash; per MCP verbunden, damit die AI sie durchsuchen kann.</span></p>
+        <p class="summary"><span class="en">Your notes, docs, and research &mdash; connected via MCP (Model Context Protocol &mdash; an open standard that connects AI tools to your apps, notes, and databases).</span><span class="de">Deine Notizen, Docs und Recherchen &mdash; verbunden via MCP (Model Context Protocol &mdash; ein offener Standard der AI-Tools mit deinen Apps, Notizen und Datenbanken verbindet).</span></p>
         <div class="why-panel">
           <div class="why-label"><span class="en">Why this exists</span><span class="de">Warum das existiert</span></div>
-          <p class="why-text"><span class="en">The AI should know what you know. If you have notes on a topic, the AI should check them before starting new research. Connect your existing knowledge (Obsidian, Notion, or any tool via MCP) so the AI works with your context, not generic internet knowledge.</span><span class="de">Die AI sollte wissen was du wei&szlig;t. Wenn du Notizen zu einem Thema hast, sollte die AI sie pr&uuml;fen bevor sie neue Recherche startet. Verbinde dein vorhandenes Wissen (Obsidian, Notion oder jedes Tool via MCP) damit die AI mit deinem Kontext arbeitet, nicht mit generischem Internet-Wissen.</span></p>
+          <p class="why-text"><span class="en">If you have notes on a topic, the AI should check them before starting new research. Connect your existing knowledge (Obsidian, Notion, or any tool via MCP) so the AI works with your context, not generic internet knowledge.</span><span class="de">Wenn du Notizen zu einem Thema hast, sollte die AI sie pr&uuml;fen bevor sie neue Recherche startet. Verbinde dein vorhandenes Wissen (Obsidian, Notion oder jedes Tool via MCP) damit die AI mit deinem Kontext arbeitet.</span></p>
         </div>
       </div>
       <div class="box" onclick="toggleWhy(this)">
@@ -766,7 +833,7 @@
         <p class="summary"><span class="en">SQL databases for performance tracking, skill metrics, and queryable logs.</span><span class="de">SQL-Datenbanken f&uuml;r Performance-Tracking, Skill-Metriken und abfragbare Logs.</span></p>
         <div class="why-panel">
           <div class="why-label"><span class="en">Why this exists</span><span class="de">Warum das existiert</span></div>
-          <p class="why-text"><span class="en">Some questions need queries, not conversations. "Which skills perform worst?" "How many research tasks did I run this month?" "What's the average quality score?" Structured data in a database enables pattern finding that plain text can't match.</span><span class="de">Manche Fragen brauchen Queries, keine Konversationen. &bdquo;Welche Skills performen am schlechtesten?&ldquo; &bdquo;Wie viele Recherche-Aufgaben habe ich diesen Monat ausgef&uuml;hrt?&ldquo; &bdquo;Was ist der durchschnittliche Quality-Score?&ldquo; Strukturierte Daten in einer Datenbank erm&ouml;glichen Mustererkennung die mit Flie&szlig;text nicht m&ouml;glich ist.</span></p>
+          <p class="why-text"><span class="en">Some questions need queries, not conversations. "Which workflows perform worst?" "What's the average quality score?" Structured data enables pattern finding that plain text can't match.</span><span class="de">Manche Fragen brauchen Queries, keine Konversationen. &bdquo;Welche Workflows performen am schlechtesten?&ldquo; &bdquo;Was ist der durchschnittliche Quality-Score?&ldquo; Strukturierte Daten erm&ouml;glichen Mustererkennung die mit Flie&szlig;text nicht m&ouml;glich ist.</span></p>
         </div>
       </div>
       <div class="box" onclick="toggleWhy(this)">
@@ -775,7 +842,7 @@
         <p class="summary"><span class="en">Conversation history, learned preferences, and persistent context across sessions.</span><span class="de">Konversationsverlauf, gelernte Pr&auml;ferenzen und persistenter Kontext &uuml;ber Sessions hinweg.</span></p>
         <div class="why-panel">
           <div class="why-label"><span class="en">Why this exists</span><span class="de">Warum das existiert</span></div>
-          <p class="why-text"><span class="en">You don't want to introduce yourself every session. A memory system stores your preferences, past decisions, project context, and learned patterns. The AI becomes a long-term partner that builds on previous work instead of starting fresh every time.</span><span class="de">Du willst dich nicht jede Session neu vorstellen. Ein Ged&auml;chtnis-System speichert deine Pr&auml;ferenzen, vergangene Entscheidungen, Projektkontext und gelernte Muster. Die AI wird ein langfristiger Partner der auf vorheriger Arbeit aufbaut statt jedes Mal bei null zu starten.</span></p>
+          <p class="why-text"><span class="en">You don't want to introduce yourself every session. A memory system stores preferences, past decisions, and learned patterns. The AI becomes a long-term partner that builds on previous work.</span><span class="de">Du willst dich nicht jede Session neu vorstellen. Ein Ged&auml;chtnis-System speichert Pr&auml;ferenzen, vergangene Entscheidungen und gelernte Muster. Die AI wird ein langfristiger Partner der auf vorheriger Arbeit aufbaut.</span></p>
         </div>
       </div>
     </div>
@@ -787,60 +854,76 @@
       <h3>Workflow</h3>
       <span class="tag tag-green"><span class="en">How work gets done</span><span class="de">Wie Arbeit erledigt wird</span></span>
     </div>
+    <p class="problem-stmt">
+      <span class="en">Quality needs structure, not hope.</span>
+      <span class="de">Qualit&auml;t braucht Struktur, nicht Hoffnung.</span>
+    </p>
     <div class="workflow-grid">
       <div class="box" onclick="toggleWhy(this)">
         <span class="click-hint"><span class="en">click for why</span><span class="de">klick f&uuml;r warum</span></span>
         <h4>&#x1F50D; 1. <span class="en">Clarify</span><span class="de">Kl&auml;ren</span></h4>
-        <p class="summary"><span class="en">Understand the problem before producing output. Research, analyze, define scope.</span><span class="de">Das Problem verstehen bevor Output produziert wird. Recherchieren, analysieren, Scope definieren.</span></p>
+        <p class="summary"><span class="en">Understand the problem before producing output.</span><span class="de">Das Problem verstehen bevor Output produziert wird.</span></p>
         <div class="why-panel">
           <div class="why-label"><span class="en">Why this exists</span><span class="de">Warum das existiert</span></div>
-          <p class="why-text"><span class="en">Most AI failures happen because the problem was unclear, not because the AI was bad. "Write me a landing page" produces generic output. "Write a landing page for developers who tried privacy tools and found them too complex" produces something useful. Clarifying first saves hours of iteration later.</span><span class="de">Die meisten AI-Fehlschl&auml;ge passieren weil das Problem unklar war, nicht weil die AI schlecht war. &bdquo;Schreib mir eine Landing Page&ldquo; produziert generischen Output. &bdquo;Schreib eine Landing Page f&uuml;r Entwickler die Privacy-Tools ausprobiert und zu komplex gefunden haben&ldquo; produziert etwas Brauchbares. Erst kl&auml;ren spart Stunden an Iteration sp&auml;ter.</span></p>
+          <p class="why-text"><span class="en">Most AI failures happen because the problem was unclear. Clarifying first saves hours of iteration later.</span><span class="de">Die meisten AI-Fehlschl&auml;ge passieren weil das Problem unklar war. Erst kl&auml;ren spart Stunden an Iteration sp&auml;ter.</span></p>
         </div>
       </div>
       <div class="box" onclick="toggleWhy(this)">
         <span class="click-hint"><span class="en">click for why</span><span class="de">klick f&uuml;r warum</span></span>
         <h4>&#x1F528; 2. <span class="en">Execute</span><span class="de">Machen</span></h4>
-        <p class="summary"><span class="en">Produce the actual output. Write, code, build, create.</span><span class="de">Den eigentlichen Output produzieren. Schreiben, coden, bauen, erstellen.</span></p>
+        <p class="summary"><span class="en">Produce the actual output. Write, code, build.</span><span class="de">Den eigentlichen Output produzieren. Schreiben, coden, bauen.</span></p>
         <div class="why-panel">
           <div class="why-label"><span class="en">Why this exists</span><span class="de">Warum das existiert</span></div>
-          <p class="why-text"><span class="en">With a clear problem definition and the right skills loaded, execution becomes predictable. The AI knows what to build, how to build it, and what quality looks like. This is where the actual output gets produced &mdash; code, documents, research, content.</span><span class="de">Mit einer klaren Problemdefinition und den richtigen Skills geladen wird die Ausf&uuml;hrung vorhersehbar. Die AI wei&szlig; was sie bauen soll, wie sie es bauen soll und wie Qualit&auml;t aussieht. Hier entsteht der eigentliche Output &mdash; Code, Dokumente, Recherche, Content.</span></p>
+          <p class="why-text"><span class="en">With a clear problem and the right workflows loaded, execution becomes predictable. The AI knows what to build and what quality looks like.</span><span class="de">Mit einem klaren Problem und den richtigen Workflows geladen wird die Ausf&uuml;hrung vorhersehbar. Die AI wei&szlig; was sie bauen soll und wie Qualit&auml;t aussieht.</span></p>
         </div>
       </div>
       <div class="box" onclick="toggleWhy(this)">
         <span class="click-hint"><span class="en">click for why</span><span class="de">klick f&uuml;r warum</span></span>
         <h4>&#x2705; 3. <span class="en">Verify</span><span class="de">Pr&uuml;fen</span></h4>
-        <p class="summary"><span class="en">Check quality. Fact-check, test, stress-test assumptions.</span><span class="de">Qualit&auml;t pr&uuml;fen. Fakten checken, testen, Annahmen stressen.</span></p>
+        <p class="summary"><span class="en">Check quality. Fact-check, test, stress-test.</span><span class="de">Qualit&auml;t pr&uuml;fen. Fakten checken, testen, stressen.</span></p>
         <div class="why-panel">
           <div class="why-label"><span class="en">Why this exists</span><span class="de">Warum das existiert</span></div>
-          <p class="why-text"><span class="en">AI outputs need verification &mdash; always. Build this into the workflow, not as an afterthought. A dedicated verify step catches hallucinated facts, missed edge cases, and quality issues before they ship. The system runs quality checks automatically, not because you remembered to ask.</span><span class="de">AI-Outputs brauchen Verifikation &mdash; immer. Bau das in den Workflow ein, nicht als Nachgedanke. Ein dedizierter Pr&uuml;fschritt f&auml;ngt halluzinierte Fakten, &uuml;bersehene Randf&auml;lle und Qualit&auml;tsprobleme ab bevor sie ausgeliefert werden. Das System f&uuml;hrt Qualit&auml;tspr&uuml;fungen automatisch durch, nicht weil du daran gedacht hast zu fragen.</span></p>
+          <p class="why-text"><span class="en">AI outputs need verification &mdash; always. The system runs quality checks automatically, not because you remembered to ask.</span><span class="de">AI-Outputs brauchen Verifikation &mdash; immer. Das System f&uuml;hrt Qualit&auml;tspr&uuml;fungen automatisch durch, nicht weil du daran gedacht hast zu fragen.</span></p>
         </div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- Outputs -->
-  <div class="system-section">
-    <div class="system-section-header">
-      <h3>Outputs</h3>
-      <span class="tag tag-green"><span class="en">What gets produced</span><span class="de">Was produziert wird</span></span>
+<!-- ==================== PROGRESSION TIMELINE ==================== -->
+<section>
+  <div class="section-header">
+    <h2>
+      <span class="en">This Wasn't Built in a Day</span>
+      <span class="de">Das wurde nicht an einem Tag gebaut</span>
+    </h2>
+    <p class="section-sub">
+      <span class="en">The system grew incrementally. You don't need everything on day one.</span>
+      <span class="de">Das System wuchs schrittweise. Du brauchst nicht alles am ersten Tag.</span>
+    </p>
+  </div>
+  <div class="section-divider" style="background: linear-gradient(90deg, var(--red), var(--green));"></div>
+
+  <div class="progression-row">
+    <div class="prog-card">
+      <div class="prog-dot" style="background: var(--red);"></div>
+      <h4><span class="en">Week 1</span><span class="de">Woche 1</span></h4>
+      <p><span class="en">Just a terminal and a config file. The AI knows your rules and workflow.</span><span class="de">Nur ein Terminal und eine Config-Datei. Die AI kennt deine Regeln und deinen Workflow.</span></p>
     </div>
-    <div class="outputs-grid">
-      <div class="box">
-        <h4>&#x1F310; Websites & Apps</h4>
-        <p class="summary"><span class="en">Full sites built and deployed end-to-end.</span><span class="de">Komplette Websites gebaut und End-to-End deployed.</span></p>
-      </div>
-      <div class="box">
-        <h4>&#x1F4BB; Open Source</h4>
-        <p class="summary"><span class="en">Tools, frameworks, and libraries &mdash; published and maintained.</span><span class="de">Tools, Frameworks und Libraries &mdash; ver&ouml;ffentlicht und gepflegt.</span></p>
-      </div>
-      <div class="box">
-        <h4>&#x1F4DD; <span class="en">Research & Docs</span><span class="de">Recherche & Docs</span></h4>
-        <p class="summary"><span class="en">Structured knowledge, technical documentation, analysis.</span><span class="de">Strukturiertes Wissen, technische Dokumentation, Analysen.</span></p>
-      </div>
-      <div class="box">
-        <h4>&#x1F4E3; Content</h4>
-        <p class="summary"><span class="en">Posts, articles, presentations, visual assets.</span><span class="de">Posts, Artikel, Pr&auml;sentationen, visuelle Assets.</span></p>
-      </div>
+    <div class="prog-card">
+      <div class="prog-dot" style="background: var(--amber);"></div>
+      <h4><span class="en">Week 2</span><span class="de">Woche 2</span></h4>
+      <p><span class="en">Added first reusable workflows. Research and writing became consistent.</span><span class="de">Erste wiederverwendbare Workflows hinzugef&uuml;gt. Recherche und Schreiben wurden konsistent.</span></p>
+    </div>
+    <div class="prog-card">
+      <div class="prog-dot" style="background: var(--accent);"></div>
+      <h4><span class="en">Week 3</span><span class="de">Woche 3</span></h4>
+      <p><span class="en">Connected knowledge bases. The AI stopped asking what it already knew.</span><span class="de">Wissensbasen verbunden. Die AI h&ouml;rte auf zu fragen was sie schon wusste.</span></p>
+    </div>
+    <div class="prog-card">
+      <div class="prog-dot" style="background: var(--green);"></div>
+      <h4><span class="en">Month 2</span><span class="de">Monat 2</span></h4>
+      <p><span class="en">The system runs itself. Quality checks, memory, parallel agents &mdash; all integrated.</span><span class="de">Das System l&auml;uft von selbst. Qualit&auml;tspr&uuml;fungen, Ged&auml;chtnis, parallele Agents &mdash; alles integriert.</span></p>
     </div>
   </div>
 </section>
@@ -849,7 +932,7 @@
 <section>
   <div class="section-header">
     <h2><span class="en">What This Enables</span><span class="de">Was damit m&ouml;glich wird</span></h2>
-    <p class="section-sub"><span class="en">Concrete results from using this system architecture, not hypotheticals.</span><span class="de">Konkrete Ergebnisse aus dieser System-Architektur, keine Hypothesen.</span></p>
+    <p class="section-sub"><span class="en">Concrete results from this system, not hypotheticals.</span><span class="de">Konkrete Ergebnisse aus diesem System, keine Hypothesen.</span></p>
   </div>
   <div class="section-divider" style="background: var(--accent);"></div>
 
@@ -865,7 +948,7 @@
       <div class="result-number">6+</div>
       <div>
         <h4><span class="en">Open source projects</span><span class="de">Open-Source-Projekte</span></h4>
-        <p><span class="en">From idea to published repository with documentation, tests, and websites. Maintained in parallel.</span><span class="de">Von der Idee zum ver&ouml;ffentlichten Repository mit Dokumentation, Tests und Websites. Parallel gepflegt.</span></p>
+        <p><span class="en">From idea to published repository (a project folder on GitHub, publicly shared &mdash; anyone can use and improve it) with docs, tests, and websites.</span><span class="de">Von der Idee zum ver&ouml;ffentlichten Repository (ein Projektordner auf GitHub, &ouml;ffentlich geteilt &mdash; jeder kann es nutzen und verbessern) mit Docs, Tests und Websites.</span></p>
       </div>
     </div>
     <div class="result-card">
@@ -895,20 +978,20 @@
       <div class="step-card">
         <div class="step-number">1</div>
         <h4><span class="en">Get a CLI AI tool</span><span class="de">Hol dir ein CLI-AI-Tool</span></h4>
-        <p><span class="en">Claude Code, Cursor, Aider, or similar. The key is: AI in the terminal with file system access. This alone changes everything.</span><span class="de">Claude Code, Cursor, Aider oder &auml;hnlich. Der Schl&uuml;ssel: AI im Terminal mit Dateisystem-Zugriff. Das allein &auml;ndert alles.</span></p>
-        <code>$ claude<br># or cursor, aider, etc.</code>
+        <p><span class="en">Claude Code, Cursor, Aider, Gemini CLI, or similar. The key is: AI in the terminal with file system access.</span><span class="de">Claude Code, Cursor, Aider, Gemini CLI oder &auml;hnlich. Der Schl&uuml;ssel: AI im Terminal mit Dateisystem-Zugriff.</span></p>
+        <code>$ claude<br># or cursor, aider, gemini, etc.</code>
       </div>
       <div class="step-card">
         <div class="step-number">2</div>
         <h4><span class="en">Write your config file</span><span class="de">Schreib deine Config-Datei</span></h4>
-        <p><span class="en">Start with your workflow and 3 rules. What should the AI always do? What should it never do? Add more as you learn what works.</span><span class="de">Starte mit deinem Workflow und 3 Regeln. Was soll die AI immer tun? Was soll sie nie tun? F&uuml;g mehr hinzu wenn du lernst was funktioniert.</span></p>
-        <code># CLAUDE.md<br>## Workflow<br>1. Clarify before building<br>2. Test before committing<br>3. Verify facts, don't assume</code>
+        <p><span class="en">Start with your workflow and 3 rules. What should the AI always do? What should it never do?</span><span class="de">Starte mit deinem Workflow und 3 Regeln. Was soll die AI immer tun? Was soll sie nie tun?</span></p>
+        <code># Your AI config file<br># (CLAUDE.md / GEMINI.md / .cursorrules)<br>## Workflow<br>1. Clarify before building<br>2. Test before committing<br>3. Verify facts, don't assume</code>
       </div>
       <div class="step-card">
         <div class="step-number">3</div>
         <h4><span class="en">Add skills over time</span><span class="de">F&uuml;g Skills mit der Zeit hinzu</span></h4>
-        <p><span class="en">When you find yourself explaining the same process twice, encode it as a skill. Build your library gradually. Don't over-engineer upfront.</span><span class="de">Wenn du denselben Prozess zweimal erkl&auml;rst, kodiere ihn als Skill. Bau deine Bibliothek schrittweise auf. Nicht im Voraus &uuml;berengineeren.</span></p>
-        <code># skills/research/SKILL.md<br>1. Check existing knowledge<br>2. Search primary sources<br>3. Verify + cross-reference<br>4. Summarize with citations</code>
+        <p><span class="en">When you find yourself explaining the same process twice, encode it as a reusable workflow.</span><span class="de">Wenn du denselben Prozess zweimal erkl&auml;rst, kodiere ihn als wiederverwendbaren Workflow.</span></p>
+        <code># Reusable workflow template<br># (any format your tool supports)<br>1. Check existing knowledge<br>2. Search primary sources<br>3. Verify + cross-reference<br>4. Summarize with citations</code>
       </div>
     </div>
   </div>
@@ -918,48 +1001,56 @@
 <section class="cost-section">
   <div class="section-header">
     <h2><span class="en">What It Costs</span><span class="de">Was es kostet</span></h2>
-    <p class="section-sub"><span class="en">Transparency about the investment. This is a professional tool, priced accordingly.</span><span class="de">Transparenz &uuml;ber die Investition. Das ist ein professionelles Tool, entsprechend bepreist.</span></p>
+    <p class="section-sub"><span class="en">Transparency about the investment.</span><span class="de">Transparenz &uuml;ber die Investition.</span></p>
   </div>
   <div class="section-divider" style="background: var(--accent);"></div>
 
   <div class="cost-grid">
     <div class="cost-card">
-      <div class="cost-label">Free Tier</div>
+      <div class="cost-label"><span class="en">Free Tier</span><span class="de">Kostenlos</span></div>
       <div class="cost-value">$0</div>
-      <div class="cost-desc"><span class="en">ChatGPT/Claude free tier. Chatbot level. Good for exploration.</span><span class="de">ChatGPT/Claude Free Tier. Chatbot-Level. Gut zum Ausprobieren.</span></div>
+      <div class="cost-desc"><span class="en">Chatbot tier (ChatGPT, Claude, Gemini &mdash; free). Good for exploration.</span><span class="de">Chatbot-Stufe (ChatGPT, Claude, Gemini &mdash; kostenlos). Gut zum Ausprobieren.</span></div>
     </div>
     <div class="cost-card highlighted">
-      <div class="cost-label">CLI + System</div>
-      <div class="cost-value">$200</div>
-      <div class="cost-desc"><span class="en">Claude Code Max. Unlimited usage, parallel agents, tool access. The full system.</span><span class="de">Claude Code Max. Unbegrenzte Nutzung, parallele Agents, Tool-Zugriff. Das volle System.</span></div>
+      <div class="cost-label"><span class="en">CLI Tools</span><span class="de">CLI-Tools</span></div>
+      <div class="cost-value">$20&ndash;200</div>
+      <div class="cost-desc"><span class="en">CLI tools with file access. Cursor ~$20, Claude Code $100&ndash;200, Gemini CLI free with API costs.</span><span class="de">CLI-Tools mit Dateizugriff. Cursor ~$20, Claude Code $100&ndash;200, Gemini CLI kostenlos mit API-Kosten.</span></div>
     </div>
     <div class="cost-card">
       <div class="cost-label"><span class="en">For comparison</span><span class="de">Zum Vergleich</span></div>
-      <div class="cost-value">$4k+</div>
-      <div class="cost-desc"><span class="en">A junior developer. Per month. One person, one task at a time.</span><span class="de">Ein Junior-Entwickler. Pro Monat. Eine Person, eine Aufgabe gleichzeitig.</span></div>
+      <div class="cost-value">&mdash;</div>
+      <div class="cost-desc"><span class="en">A single industry conference: $500&ndash;2,000. A 6-month course subscription: $300&ndash;500.</span><span class="de">Eine einzelne Fachkonferenz: $500&ndash;2.000. Ein 6-Monats-Kursabo: $300&ndash;500.</span></div>
     </div>
   </div>
 
   <p class="cost-compare">
-    <span class="en"><strong>$200/month</strong> gets you unlimited AI usage with terminal access, parallel agents, and the ability to build an integrated system. <br>
-    A single online course costs $500 and doesn't do the work for you. This system helped produce 3 courses in 4 weeks.</span>
-    <span class="de"><strong>$200/Monat</strong> bringt dir unbegrenzte AI-Nutzung mit Terminal-Zugang, parallele Agents und die M&ouml;glichkeit ein integriertes System zu bauen. <br>
-    Ein einzelner Online-Kurs kostet $500 und erledigt die Arbeit nicht f&uuml;r dich. Dieses System hat geholfen 3 Kurse in 4 Wochen zu produzieren.</span>
+    <span class="en"><strong>$0&ndash;200/month</strong> gets you AI with terminal access, parallel agents, and the ability to build an integrated system. <br>This system helped produce 3 courses in 4 weeks.</span>
+    <span class="de"><strong>$0&ndash;200/Monat</strong> bringt dir AI mit Terminal-Zugang, parallele Agents und die M&ouml;glichkeit ein integriertes System zu bauen. <br>Dieses System hat geholfen 3 Kurse in 4 Wochen zu produzieren.</span>
   </p>
 </section>
 
-<!-- ==================== STATS BAR ==================== -->
-<div class="stats-bar">
-  <div class="stat"><div class="stat-val">3</div><div class="stat-lbl">Levels</div></div>
-  <div class="stat"><div class="stat-val">4</div><div class="stat-lbl"><span class="en">Interfaces</span><span class="de">Schnittstellen</span></div></div>
-  <div class="stat"><div class="stat-val">8+</div><div class="stat-lbl">Skills</div></div>
-  <div class="stat"><div class="stat-val">3</div><div class="stat-lbl"><span class="en">Workflow Phases</span><span class="de">Workflow-Phasen</span></div></div>
-  <div class="stat"><div class="stat-val">$200</div><div class="stat-lbl"><span class="en">/month</span><span class="de">/Monat</span></div></div>
+<!-- ==================== CTA ==================== -->
+<div class="cta-section">
+  <h2>
+    <span class="en">Start Building Your System</span>
+    <span class="de">Bau dein eigenes System</span>
+  </h2>
+  <a href="starter/" class="cta-btn">
+    <span class="en">Get the Orchestrator Starter Kit &rarr;</span>
+    <span class="de">Hol dir das Orchestrator Starter Kit &rarr;</span>
+  </a>
+  <p class="cta-secondary">
+    <span class="en">Or <a href="../" style="color:var(--accent);">explore the courses</a> this system built.</span>
+    <span class="de">Oder <a href="../" style="color:var(--accent);">entdecke die Kurse</a> die dieses System gebaut hat.</span>
+  </p>
 </div>
 
 <!-- ==================== FOOTER ==================== -->
 <div class="footer">
-  <p><span class="en">Built with an AI-augmented workflow &mdash; the same system described on this page.</span><span class="de">Gebaut mit einem AI-gest&uuml;tzten Workflow &mdash; demselben System das auf dieser Seite beschrieben wird.</span></p>
+  <p>
+    <span class="en">Built with the system described on this page. What will you build with yours?</span>
+    <span class="de">Gebaut mit dem System das auf dieser Seite beschrieben wird. Was baust du mit deinem?</span>
+  </p>
 </div>
 
 <!-- ==================== JAVASCRIPT ==================== -->
@@ -970,45 +1061,6 @@
     document.getElementById('btn-en').classList.toggle('active', lang === 'en');
     document.getElementById('btn-de').classList.toggle('active', lang === 'de');
     localStorage.setItem('ai-learning-lang', lang);
-    // Re-render journey explanation for current active level
-    var activeStep = document.querySelector('.journey-step.active');
-    if (activeStep) {
-      var key = activeStep.classList.contains('j-chatbot') ? 'chatbot' :
-                activeStep.classList.contains('j-cli') ? 'cli' : 'system';
-      renderJourneyExplain(key, lang);
-    }
-  }
-
-  // Journey bar explanations — bilingual
-  var journeyTexts = {
-    chatbot: {
-      en: '<strong>Level 1 &mdash; Where most people are today.</strong> You open ChatGPT or Claude in a browser, type a question, copy-paste the answer into your editor. Every task requires you to be the middleman. The AI has no memory, no access to your files, and forgets everything when you close the tab.',
-      de: '<strong>Level 1 &mdash; Wo die meisten heute stehen.</strong> Du \u00f6ffnest ChatGPT oder Claude im Browser, tippst eine Frage, kopierst die Antwort in deinen Editor. Jede Aufgabe braucht dich als Mittelsmann. Die AI hat kein Ged\u00e4chtnis, keinen Zugriff auf deine Dateien und vergisst alles wenn du den Tab schlie\u00dft.'
-    },
-    cli: {
-      en: '<strong>Level 2 &mdash; The step most people skip.</strong> Move the AI from the browser into your terminal. Now it can read files, run commands, write code, and use git. You stop copy-pasting and start reviewing. Multiple agents can work in parallel. This is where the 10x productivity jump happens.',
-      de: '<strong>Level 2 &mdash; Der Schritt den die meisten \u00fcberspringen.</strong> Die AI wandert vom Browser ins Terminal. Jetzt kann sie Dateien lesen, Befehle ausf\u00fchren, Code schreiben und Git nutzen. Du h\u00f6rst auf zu copy-pasten und f\u00e4ngst an zu reviewen. Mehrere Agents k\u00f6nnen parallel arbeiten. Hier passiert der 10x-Produktivit\u00e4tssprung.'
-    },
-    system: {
-      en: '<strong>Level 3 &mdash; A designed system, not a collection of tools.</strong> Configuration files define behavior. Skills encode expertise. A knowledge layer connects your notes, data, and memory. A workflow ensures quality. Every component exists because a real problem demanded it.',
-      de: '<strong>Level 3 &mdash; Ein durchdachtes System, keine Tool-Sammlung.</strong> Konfigurationsdateien definieren Verhalten. Skills kodieren Expertise. Eine Wissensschicht verbindet deine Notizen, Daten und dein Ged\u00e4chtnis. Ein Workflow sichert Qualit\u00e4t. Jede Komponente existiert weil ein echtes Problem sie erfordert hat.'
-    }
-  };
-
-  function renderJourneyExplain(key, lang) {
-    document.getElementById('journey-explain').innerHTML = journeyTexts[key][lang || document.documentElement.lang || 'en'];
-  }
-
-  function showJourney(key) {
-    renderJourneyExplain(key);
-
-    document.querySelectorAll('.journey-step').forEach(function(el) { el.classList.remove('active'); });
-    var labels = { chatbot: 0, cli: 1, system: 2 };
-    document.querySelectorAll('.journey-step')[labels[key]].classList.add('active');
-
-    // Scroll to relevant section
-    var targets = { chatbot: 'level-chatbot', cli: 'level-cli', system: 'level-system' };
-    document.getElementById(targets[key]).scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   // Toggle WHY panels on click
@@ -1037,7 +1089,6 @@
   var saved = localStorage.getItem('ai-learning-lang');
   if (saved) { setLang(saved); }
   else if (navigator.language.startsWith('de')) { setLang('de'); }
-  else { renderJourneyExplain('chatbot', 'en'); }
 </script>
 
 </body>
