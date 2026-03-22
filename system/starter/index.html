@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Orchestrator Starter Kit</title>
+<meta name="description" content="Turn any AI CLI tool into a persistent, intelligent assistant. Interactive visual guide to the Claude Orchestrator Starter Kit.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+  /* Language Switcher */
+  .lang-switch {
+    position: fixed; top: 1rem; right: 1.5rem; z-index: 100;
+    display: flex; gap: 0.25rem; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.2rem;
+  }
+  .lang-btn {
+    padding: 0.3rem 0.6rem; border-radius: 6px; border: none;
+    background: transparent; color: var(--muted); cursor: pointer;
+    font-size: 0.8rem; font-weight: 600; transition: all 0.2s;
+    font-family: 'Inter', -apple-system, sans-serif;
+  }
+  .lang-btn.active { background: var(--accent); color: var(--bg); }
+  .lang-btn:hover:not(.active) { color: var(--text); }
+
+  /* Language toggle */
+  [lang="de"] .en, [lang="en"] .de { display: none; }
+
+  :root {
+    --bg: #0d1117; --surface: #161b22; --border: #30363d;
+    --text: #e6edf3; --muted: #7d8590; --accent: #58a6ff;
+    --amber: #fbbf24; --green: #22c55e; --red: #f87171; --purple: #a78bfa;
+    --orange: #f97316;
+    --surface-hover: #1c2333;
+    --blue: #58a6ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* =========== HERO =========== */
+  .hero {
+    text-align: center;
+    padding: 5rem 2rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .hero h1 {
+    font-size: 2.8rem; font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.75rem;
+  }
+  .hero .subtitle {
+    color: var(--muted); font-size: 1.15rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero-badge {
+    display: inline-block;
+    font-size: 0.75rem; font-weight: 600;
+    color: var(--green); letter-spacing: 0.5px;
+    background: rgba(34,197,94,0.1);
+    border: 1px solid rgba(34,197,94,0.25);
+    border-radius: 20px;
+    padding: 0.4rem 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .hero-github {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.9rem; font-weight: 600;
+    transition: all 0.3s;
+    margin-top: 0.5rem;
+  }
+  .hero-github:hover {
+    border-color: var(--accent);
+    background: var(--surface-hover);
+    transform: translateY(-2px);
+  }
+  .scroll-hint {
+    color: var(--muted); font-size: 0.8rem;
+    margin-top: 1.5rem; opacity: 0.7;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  /* =========== SECTIONS =========== */
+  section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+  .section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .section-header h2 {
+    font-size: 1.8rem; font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+  .section-header .section-sub {
+    color: var(--muted); font-size: 1rem;
+    max-width: 600px; margin: 0 auto;
+  }
+  .section-divider {
+    width: 60px; height: 3px;
+    margin: 0 auto 2rem;
+    border-radius: 2px;
+  }
+
+  /* =========== CLICKABLE BOX =========== */
+  .box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .box:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    background: var(--surface-hover);
+  }
+  .box h4 {
+    font-size: 0.9rem; font-weight: 700;
+    margin-bottom: 0.4rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .box .summary {
+    font-size: 0.8rem; color: var(--muted); line-height: 1.6;
+  }
+  .box .click-hint {
+    position: absolute; top: 1rem; right: 1rem;
+    font-size: 0.65rem; color: var(--muted);
+    background: rgba(255,255,255,0.05);
+    padding: 0.15rem 0.5rem; border-radius: 4px;
+    opacity: 0.5; transition: opacity 0.3s;
+  }
+  .box:hover .click-hint { opacity: 1; }
+
+  .box .detail-panel {
+    display: none;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .box .detail-panel.open { display: block; }
+  .box .detail-label {
+    font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--accent); margin-bottom: 0.5rem;
+  }
+  .box .detail-text {
+    font-size: 0.8rem; color: var(--muted); line-height: 1.7;
+  }
+
+  /* =========== BEFORE/AFTER =========== */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .compare-col {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .compare-col h3 {
+    font-size: 1rem; font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .compare-col.col-without { border-top: 3px solid var(--red); }
+  .compare-col.col-without h3 { color: var(--red); }
+  .compare-col.col-with { border-top: 3px solid var(--green); }
+  .compare-col.col-with h3 { color: var(--green); }
+  .compare-col ul { list-style: none; padding: 0; }
+  .compare-col ul li {
+    font-size: 0.85rem; color: var(--muted);
+    padding: 0.5rem 0; padding-left: 1.5rem;
+    position: relative; line-height: 1.5;
+    border-bottom: 1px solid rgba(48,54,61,0.5);
+  }
+  .compare-col ul li:last-child { border-bottom: none; }
+  .compare-col ul li::before {
+    content: '';
+    position: absolute; left: 0; top: 0.85rem;
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+  .col-without ul li::before { background: var(--red); }
+  .col-with ul li::before { background: var(--green); }
+
+  /* =========== ARCHITECTURE MAP =========== */
+  .arch-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr 280px;
+    grid-template-rows: auto auto;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .arch-center {
+    grid-column: 2; grid-row: 1;
+  }
+  .arch-left {
+    grid-column: 1; grid-row: 1;
+  }
+  .arch-right {
+    grid-column: 3; grid-row: 1;
+  }
+  .arch-bottom {
+    grid-column: 1 / -1; grid-row: 2;
+  }
+
+  /* Brain box */
+  .brain-box {
+    background: linear-gradient(135deg, rgba(88,166,255,0.08), rgba(167,139,250,0.08));
+    border: 2px solid var(--accent);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .brain-box:hover {
+    border-color: var(--purple);
+    transform: translateY(-2px);
+  }
+  .brain-box h3 {
+    font-size: 1.1rem; font-weight: 800;
+    color: var(--accent); margin-bottom: 0.5rem;
+  }
+  .brain-box .summary {
+    font-size: 0.8rem; color: var(--muted); line-height: 1.6;
+  }
+  .brain-box .click-hint {
+    position: absolute; top: 1rem; right: 1rem;
+    font-size: 0.65rem; color: var(--muted);
+    background: rgba(255,255,255,0.05);
+    padding: 0.15rem 0.5rem; border-radius: 4px;
+    opacity: 0.5; transition: opacity 0.3s;
+  }
+  .brain-box:hover .click-hint { opacity: 1; }
+  .brain-box .detail-panel {
+    display: none;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    text-align: left;
+  }
+  .brain-box .detail-panel.open { display: block; }
+  .brain-box .detail-label {
+    font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--accent); margin-bottom: 0.5rem;
+  }
+  .brain-box .detail-text {
+    font-size: 0.8rem; color: var(--muted); line-height: 1.7;
+  }
+
+  /* Skill column */
+  .skill-group { margin-bottom: 1rem; }
+  .skill-group:last-child { margin-bottom: 0; }
+  .skill-group-label {
+    font-size: 0.65rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 0.5rem; padding-left: 0.5rem;
+  }
+  .skill-group-label.phase-clarify { color: var(--blue); }
+  .skill-group-label.phase-build { color: var(--green); }
+  .skill-group-label.phase-verify { color: var(--red); }
+  .skill-group-label.phase-meta { color: var(--muted); }
+
+  .skill-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .skill-box:hover {
+    border-color: var(--accent);
+    background: var(--surface-hover);
+    transform: translateX(3px);
+  }
+  .skill-box.border-clarify { border-left: 3px solid var(--blue); }
+  .skill-box.border-build { border-left: 3px solid var(--green); }
+  .skill-box.border-verify { border-left: 3px solid var(--red); }
+  .skill-box.border-meta { border-left: 3px solid var(--muted); }
+
+  .skill-box h5 {
+    font-size: 0.8rem; font-weight: 700;
+    margin-bottom: 0.2rem;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .skill-box .skill-desc {
+    font-size: 0.7rem; color: var(--muted); line-height: 1.5;
+  }
+  .skill-box .skill-detail {
+    display: none;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.7rem; color: var(--muted); line-height: 1.6;
+  }
+  .skill-box .skill-detail.open { display: block; }
+
+  /* Memory layers */
+  .memory-stack { display: flex; flex-direction: column; gap: 0; }
+  .memory-layer {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .memory-layer:first-child { border-radius: 12px 12px 0 0; }
+  .memory-layer:last-child { border-radius: 0 0 12px 12px; }
+  .memory-layer:not(:last-child) { border-bottom: none; }
+  .memory-layer:hover {
+    background: var(--surface-hover);
+    z-index: 1;
+  }
+  .memory-layer h5 {
+    font-size: 0.8rem; font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+  .memory-layer .mem-desc {
+    font-size: 0.7rem; color: var(--muted); line-height: 1.5;
+  }
+  .memory-layer .mem-detail {
+    display: none;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.7rem; color: var(--muted); line-height: 1.6;
+  }
+  .memory-layer .mem-detail.open { display: block; }
+  .memory-layer.layer-short { border-left: 3px solid var(--amber); }
+  .memory-layer.layer-mid { border-left: 3px solid var(--purple); }
+  .memory-layer.layer-long { border-left: 3px solid var(--accent); }
+  .memory-layer.layer-short h5 { color: var(--amber); }
+  .memory-layer.layer-mid h5 { color: var(--purple); }
+  .memory-layer.layer-long h5 { color: var(--accent); }
+
+  .memory-stack-label {
+    font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--purple); margin-bottom: 0.75rem;
+    text-align: center;
+  }
+
+  /* Integration boxes */
+  .integration-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .integration-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    text-align: center;
+    border-top: 2px solid var(--muted);
+  }
+  .integration-box h5 {
+    font-size: 0.85rem; font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  .integration-box p {
+    font-size: 0.75rem; color: var(--muted); line-height: 1.5;
+  }
+  .integration-label {
+    font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--muted); margin-bottom: 0.75rem;
+    text-align: center;
+  }
+
+  /* =========== SKILL CHAINS =========== */
+  .chains-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  .chain-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+  .chain-card h4 {
+    font-size: 0.85rem; font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+  }
+  .chain-flow {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .chain-node {
+    font-size: 0.7rem; font-weight: 600;
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+  .chain-node.node-clarify { border-color: var(--blue); color: var(--blue); background: rgba(88,166,255,0.08); }
+  .chain-node.node-build { border-color: var(--green); color: var(--green); background: rgba(34,197,94,0.08); }
+  .chain-node.node-verify { border-color: var(--red); color: var(--red); background: rgba(248,113,113,0.08); }
+  .chain-arrow {
+    color: var(--muted); font-size: 0.8rem; font-weight: 600;
+  }
+  .chain-desc {
+    font-size: 0.75rem; color: var(--muted); margin-top: 0.5rem; line-height: 1.5;
+  }
+
+  /* =========== WORKFLOW PHASES =========== */
+  .workflow-flow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 0;
+    align-items: start;
+  }
+  .workflow-phase {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .workflow-phase h4 {
+    font-size: 1rem; font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  .workflow-phase .phase-question {
+    font-size: 0.8rem; color: var(--muted); font-style: italic;
+    margin-bottom: 0.75rem;
+  }
+  .workflow-phase .phase-skills {
+    font-size: 0.75rem; color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .workflow-phase .phase-result {
+    font-size: 0.75rem; color: var(--green);
+    background: rgba(34,197,94,0.08);
+    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+    display: inline-block;
+  }
+  .workflow-phase.phase-clarify { border-top: 3px solid var(--blue); }
+  .workflow-phase.phase-clarify h4 { color: var(--blue); }
+  .workflow-phase.phase-build { border-top: 3px solid var(--green); }
+  .workflow-phase.phase-build h4 { color: var(--green); }
+  .workflow-phase.phase-verify { border-top: 3px solid var(--red); }
+  .workflow-phase.phase-verify h4 { color: var(--red); }
+
+  .phase-arrow {
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 1.5rem; font-weight: 300;
+    padding: 0 0.5rem;
+    min-height: 120px;
+  }
+
+  /* =========== CONTEXT MANAGEMENT =========== */
+  .context-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .context-node {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    text-align: center;
+    min-width: 120px;
+    border-top: 2px solid var(--orange);
+  }
+  .context-node h5 {
+    font-size: 0.75rem; font-weight: 700;
+    color: var(--orange); margin-bottom: 0.2rem;
+  }
+  .context-node p {
+    font-size: 0.65rem; color: var(--muted); line-height: 1.4;
+  }
+  .context-arrow {
+    color: var(--orange); font-size: 1.2rem; padding: 0 0.3rem;
+    opacity: 0.6;
+  }
+
+  .context-visual {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .context-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    border-left: 3px solid var(--orange);
+  }
+  .context-card h4 {
+    font-size: 0.85rem; font-weight: 700;
+    color: var(--orange); margin-bottom: 0.4rem;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .context-card p {
+    font-size: 0.75rem; color: var(--muted); line-height: 1.5;
+  }
+  .context-card code {
+    display: inline;
+    font-family: 'Fira Code', 'SF Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--orange);
+    background: rgba(249,115,22,0.1);
+    padding: 0.1rem 0.3rem;
+    border-radius: 3px;
+  }
+
+  .context-cycle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+    padding: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .cycle-node {
+    font-size: 0.7rem; font-weight: 600;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid var(--orange);
+    color: var(--orange);
+    background: rgba(249,115,22,0.06);
+    white-space: nowrap;
+  }
+  .cycle-arrow {
+    color: var(--orange); font-size: 0.9rem; opacity: 0.5;
+  }
+
+  /* =========== CODE BLOCKS =========== */
+  .code-block {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    font-family: 'Fira Code', 'SF Mono', monospace;
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--green);
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+  .code-block .comment { color: var(--muted); }
+  .code-block .cmd { color: var(--text); }
+  .code-block .highlight { color: var(--accent); }
+
+  /* =========== GET STARTED =========== */
+  .start-callout {
+    background: linear-gradient(135deg, rgba(88,166,255,0.08), rgba(167,139,250,0.08));
+    border: 2px solid var(--accent);
+    border-radius: 16px;
+    padding: 2.5rem;
+  }
+  .start-callout h3 {
+    font-size: 1.3rem; font-weight: 800;
+    color: var(--accent); margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  .start-callout .start-sub {
+    color: var(--muted); font-size: 0.9rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  .start-try {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .start-try code {
+    display: inline-block;
+    font-family: 'Fira Code', 'SF Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent);
+    background: rgba(88,166,255,0.1);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+  }
+
+  /* =========== EXAMPLE FLOW =========== */
+  .example-timeline {
+    position: relative;
+    padding-left: 3rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .example-timeline::before {
+    content: '';
+    position: absolute; left: 1rem; top: 0; bottom: 0;
+    width: 2px; background: linear-gradient(to bottom, var(--accent), var(--green));
+  }
+  .example-step {
+    position: relative;
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: border-color 0.3s;
+  }
+  .example-step:hover { border-color: var(--accent); }
+  .example-step .step-dot {
+    position: absolute;
+    left: -2.5rem; top: 0.75rem;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background: var(--bg);
+  }
+  .example-step.step-user { border-left: 3px solid var(--accent); }
+  .example-step.step-system { border-left: 3px solid var(--green); }
+  .example-step.step-system .step-dot { border-color: var(--green); }
+
+  .step-label {
+    font-size: 0.65rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 0.2rem;
+  }
+  .step-label.label-user { color: var(--accent); }
+  .step-label.label-system { color: var(--green); }
+  .example-step p {
+    font-size: 0.8rem; color: var(--muted); line-height: 1.5;
+  }
+
+  /* =========== FOOTER =========== */
+  .footer {
+    text-align: center; padding: 2rem;
+    font-size: 0.8rem; color: var(--muted);
+    border-top: 1px solid var(--border);
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .footer p { margin-bottom: 0.5rem; }
+
+  /* =========== RESPONSIVE =========== */
+  @media (max-width: 900px) {
+    .hero h1 { font-size: 2rem; }
+    .arch-layout {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+    }
+    .arch-center { grid-column: 1; grid-row: 1; }
+    .arch-left { grid-column: 1; grid-row: 2; }
+    .arch-right { grid-column: 1; grid-row: 3; }
+    .arch-bottom { grid-column: 1; grid-row: 4; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .chains-grid { grid-template-columns: 1fr; }
+    .workflow-flow {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .phase-arrow { min-height: auto; transform: rotate(90deg); padding: 0.5rem; }
+    .context-visual { grid-template-columns: 1fr; }
+    .lang-switch { top: 0.75rem; right: 1rem; }
+    .lang-btn { padding: 0.4rem 0.7rem; font-size: 0.85rem; }
+  }
+  @media (max-width: 600px) {
+    .hero { padding: 3rem 1rem 1.5rem; }
+    section { padding: 2rem 1rem; }
+    .hero h1 { font-size: 1.6rem; }
+    .integration-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Back link -->
+<a href="../" style="position:fixed;top:1rem;left:1.5rem;z-index:100;color:var(--muted);text-decoration:none;font-size:0.85rem;font-weight:600;font-family:'Inter',-apple-system,sans-serif;">
+  <span class="en">&larr; System Overview</span>
+  <span class="de">&larr; System-&Uuml;bersicht</span>
+</a>
+
+<!-- Language Switcher -->
+<div class="lang-switch">
+  <button class="lang-btn active" onclick="setLang('en')" id="btn-en">EN</button>
+  <button class="lang-btn" onclick="setLang('de')" id="btn-de">DE</button>
+</div>
+
+<!-- ==================== HERO ==================== -->
+<div class="hero">
+  <div class="hero-badge">Open Source &middot; MIT License &middot; No Dependencies</div>
+  <h1>
+    <span class="en">The Orchestrator Starter Kit</span>
+    <span class="de">Das Orchestrator Starter Kit</span>
+  </h1>
+  <p class="subtitle">
+    <span class="en">Turn any AI CLI tool into a persistent, intelligent assistant &mdash; in 5 minutes.</span>
+    <span class="de">Verwandle jedes AI CLI Tool in einen persistenten, intelligenten Assistenten &mdash; in 5 Minuten.</span>
+  </p>
+  <a href="https://github.com/janrummel/claude-orchestrator-starter" class="hero-github" target="_blank" rel="noopener">
+    &#x2B50; GitHub Repository &rarr;
+  </a>
+  <p class="scroll-hint">
+    <span class="en">&darr; Scroll to explore the architecture</span>
+    <span class="de">&darr; Scrollen um die Architektur zu erkunden</span>
+  </p>
+</div>
+
+<!-- ==================== BEFORE vs AFTER ==================== -->
+<section>
+  <div class="section-header">
+    <h2>
+      <span class="en">Before vs After</span>
+      <span class="de">Vorher vs Nachher</span>
+    </h2>
+    <p class="section-sub">
+      <span class="en">What changes when your AI tool has a system behind it.</span>
+      <span class="de">Was sich &auml;ndert wenn dein AI Tool ein System dahinter hat.</span>
+    </p>
+  </div>
+  <div class="section-divider" style="background: linear-gradient(90deg, var(--red), var(--green));"></div>
+
+  <div class="compare-grid">
+    <div class="compare-col col-without">
+      <h3>
+        <span class="en">Without Orchestrator</span>
+        <span class="de">Ohne Orchestrator</span>
+      </h3>
+      <ul>
+        <li><span class="en">Forgets everything each session</span><span class="de">Vergisst alles nach jeder Session</span></li>
+        <li><span class="en">Describe same steps repeatedly</span><span class="de">Gleiche Schritte immer wieder beschreiben</span></li>
+        <li><span class="en">Output varies unpredictably</span><span class="de">Ergebnisse variieren unvorhersehbar</span></li>
+        <li><span class="en">&ldquo;Where were we?&rdquo; every morning</span><span class="de">&bdquo;Wo waren wir?&ldquo; jeden Morgen</span></li>
+      </ul>
+    </div>
+    <div class="compare-col col-with">
+      <h3>
+        <span class="en">With Orchestrator</span>
+        <span class="de">Mit Orchestrator</span>
+      </h3>
+      <ul>
+        <li><span class="en">Remembers decisions, context, preferences</span><span class="de">Merkt sich Entscheidungen, Kontext, Pr&auml;ferenzen</span></li>
+        <li><span class="en">Skills automate common patterns</span><span class="de">Skills automatisieren g&auml;ngige Muster</span></li>
+        <li><span class="en">Quality loops catch issues</span><span class="de">Qualit&auml;tsschleifen fangen Probleme ab</span></li>
+        <li><span class="en">Handoff picks up exactly where you left off</span><span class="de">Handoff macht genau dort weiter wo du aufgeh&ouml;rt hast</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== THE ARCHITECTURE ==================== -->
+<section>
+  <div class="section-header">
+    <h2>
+      <span class="en">The Architecture</span>
+      <span class="de">Die Architektur</span>
+    </h2>
+    <p class="section-sub">
+      <span class="en">Click any component to see what it does and how it connects.</span>
+      <span class="de">Klick auf eine Komponente um zu sehen was sie tut und wie sie verbunden ist.</span>
+    </p>
+  </div>
+  <div class="section-divider" style="background: linear-gradient(90deg, var(--blue), var(--purple));"></div>
+
+  <div class="arch-layout">
+
+    <!-- LEFT: 8 Skills -->
+    <div class="arch-left">
+      <!-- Clarify -->
+      <div class="skill-group">
+        <div class="skill-group-label phase-clarify">
+          <span class="en">Clarify</span><span class="de">Kl&auml;ren</span>
+        </div>
+        <div class="skill-box border-clarify" onclick="toggleSkill(this)">
+          <h5>&#x1F4E5; Capture</h5>
+          <div class="skill-desc">
+            <span class="en">Quick note-taking, PARA categorization</span>
+            <span class="de">Schnelle Notizen, PARA-Kategorisierung</span>
+          </div>
+          <div class="skill-detail">
+            <span class="en">Captures ideas and notes into a structured inbox using the PARA method (Projects, Areas, Resources, Archive). Prevents ideas from getting lost during focused work.</span>
+            <span class="de">Erfasst Ideen und Notizen in einer strukturierten Inbox nach der PARA-Methode (Projects, Areas, Resources, Archive). Verhindert dass Ideen bei fokussierter Arbeit verloren gehen.</span>
+          </div>
+        </div>
+        <div class="skill-box border-clarify" onclick="toggleSkill(this)">
+          <h5>&#x1F52C; Distill</h5>
+          <div class="skill-desc">
+            <span class="en">Progressive summarization in 4 layers</span>
+            <span class="de">Progressive Zusammenfassung in 4 Schichten</span>
+          </div>
+          <div class="skill-detail">
+            <span class="en">Layer 1: Full notes. Layer 2: Bold passages. Layer 3: Highlighted core. Layer 4: Executive summary. Each layer compresses by ~70%.</span>
+            <span class="de">Schicht 1: Vollst&auml;ndige Notizen. Schicht 2: Fettgedruckte Passagen. Schicht 3: Markierter Kern. Schicht 4: Executive Summary. Jede Schicht komprimiert um ~70%.</span>
+          </div>
+        </div>
+        <div class="skill-box border-clarify" onclick="toggleSkill(this)">
+          <h5>&#x1F50D; Analyze</h5>
+          <div class="skill-desc">
+            <span class="en">ReAct analysis (Plan-Act-Reflect cycle)</span>
+            <span class="de">ReAct-Analyse (Plan-Act-Reflect-Zyklus)</span>
+          </div>
+          <div class="skill-detail">
+            <span class="en">Structured analysis using Plan (what to examine), Act (gather evidence), Reflect (what does it mean). Prevents premature conclusions by enforcing a thinking cycle.</span>
+            <span class="de">Strukturierte Analyse mit Plan (was untersuchen), Act (Evidenz sammeln), Reflect (was bedeutet das). Verhindert voreilige Schl&uuml;sse durch einen erzwungenen Denkzyklus.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Build -->
+      <div class="skill-group">
+        <div class="skill-group-label phase-build">
+          <span class="en">Build</span><span class="de">Machen</span>
+        </div>
+        <div class="skill-box border-build" onclick="toggleSkill(this)">
+          <h5>&#x270D;&#xFE0F; Express</h5>
+          <div class="skill-desc">
+            <span class="en">Output generation with POPP method + UX principles</span>
+            <span class="de">Output-Generierung mit POPP-Methode + UX-Prinzipien</span>
+          </div>
+          <div class="skill-detail">
+            <span class="en">POPP = Purpose, Outline, Prose, Polish. Generates texts, posts, documents with consistent quality. Applies UX writing principles: clear, concise, useful.</span>
+            <span class="de">POPP = Purpose, Outline, Prose, Polish. Generiert Texte, Posts, Dokumente mit konsistenter Qualit&auml;t. Wendet UX-Writing-Prinzipien an: klar, knapp, n&uuml;tzlich.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Verify -->
+      <div class="skill-group">
+        <div class="skill-group-label phase-verify">
+          <span class="en">Verify</span><span class="de">Pr&uuml;fen</span>
+        </div>
+        <div class="skill-box border-verify" onclick="toggleSkill(this)">
+          <h5>&#x1F3AF; Signal-Check</h5>
+          <div class="skill-desc">
+            <span class="en">4-axis substance analysis</span>
+            <span class="de">4-Achsen-Substanzanalyse</span>
+          </div>
+          <div class="skill-detail">
+            <span class="en">Checks 4 axes: Meaning (does it say something?), Facts (is it true?), Framing (is the perspective fair?), Context (is anything missing?). Quick check, ~500 tokens.</span>
+            <span class="de">Pr&uuml;ft 4 Achsen: Bedeutung (sagt es etwas?), Fakten (stimmt es?), Framing (ist die Perspektive fair?), Kontext (fehlt etwas?). Quick Check, ~500 Tokens.</span>
+          </div>
+        </div>
+        <div class="skill-box border-verify" onclick="toggleSkill(this)">
+          <h5>&#x2694;&#xFE0F; Challenge</h5>
+          <div class="skill-desc">
+            <span class="en">Adversarial stress-testing with 3 attack roles</span>
+            <span class="de">Adversarialer Stress-Test mit 3 Angriffsrollen</span>
+          </div>
+          <div class="skill-detail">
+            <span class="en">Three attack roles: Devil's Advocate (logical weaknesses), Domain Expert (technical gaps), Skeptic (unstated assumptions). Hardens outputs before publication.</span>
+            <span class="de">Drei Angriffsrollen: Devil's Advocate (logische Schw&auml;chen), Domain Expert (fachliche L&uuml;cken), Skeptiker (unausgesprochene Annahmen). H&auml;rtet Outputs vor Ver&ouml;ffentlichung.</span>
+          </div>
+        </div>
+        <div class="skill-box border-verify" onclick="toggleSkill(this)">
+          <h5>&#x1F6E1;&#xFE0F; Quality-Gate</h5>
+          <div class="skill-desc">
+            <span class="en">Risk-based triage (levels 0&ndash;3), quality scoring</span>
+            <span class="de">Risikobasierte Triage (Stufen 0&ndash;3), Quality-Scoring</span>
+          </div>
+          <div class="skill-detail">
+            <span class="en">Level 0: No risk, no check. Level 1: Signal-check + score. Level 2: + external verification. Level 3: Full review + challenge. Automatic escalation based on risk indicators (numbers, claims, causal statements).</span>
+            <span class="de">Stufe 0: Kein Risiko, kein Check. Stufe 1: Signal-check + Score. Stufe 2: + externe Verifikation. Stufe 3: Full Review + Challenge. Automatische Eskalation basierend auf Risiko-Indikatoren (Zahlen, Behauptungen, Kausalaussagen).</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meta -->
+      <div class="skill-group">
+        <div class="skill-group-label phase-meta">Meta</div>
+        <div class="skill-box border-meta" onclick="toggleSkill(this)">
+          <h5>&#x1F4BE; Handoff</h5>
+          <div class="skill-desc">
+            <span class="en">Session state persistence for seamless continuation</span>
+            <span class="de">Session-State-Persistenz f&uuml;r nahtlose Fortsetzung</span>
+          </div>
+          <div class="skill-detail">
+            <span class="en">Saves current session state (open tasks, decisions, context) so the next session picks up exactly where you left off. Triggered automatically at 25% context remaining.</span>
+            <span class="de">Speichert aktuellen Session-State (offene Aufgaben, Entscheidungen, Kontext) damit die n&auml;chste Session genau dort weitermacht. Wird automatisch bei 25% verbleibendem Kontext ausgel&ouml;st.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER: The Brain -->
+    <div class="arch-center">
+      <div class="brain-box" onclick="toggleDetail(this)">
+        <span class="click-hint"><span class="en">click for details</span><span class="de">klick f&uuml;r Details</span></span>
+        <h3>&#x1F9E0;
+          <span class="en">The Brain</span>
+          <span class="de">Das Gehirn</span>
+        </h3>
+        <p class="summary">
+          <span class="en">Config File (CLAUDE.md) &mdash; The AI's operating manual. Defines workflow, routing rules, and quality standards.</span>
+          <span class="de">Config-Datei (CLAUDE.md) &mdash; Das Betriebshandbuch der AI. Definiert Workflow, Routing-Regeln und Qualit&auml;tsstandards.</span>
+        </p>
+        <div class="detail-panel">
+          <div class="detail-label"><span class="en">What it contains</span><span class="de">Was sie enth&auml;lt</span></div>
+          <p class="detail-text">
+            <span class="en"><strong>3-Phase Workflow:</strong> Clarify &rarr; Build &rarr; Verify. No phase gets skipped.<br><br><strong>Cognitive Mode Detection:</strong> Automatically recognizes whether you need research, writing, analysis, or code and routes to the right skills.<br><br><strong>Routing Table:</strong> Maps skill names to phases. The AI knows which tool to use for each task type.<br><br><strong>Quality Principles:</strong> Traceability, source criticism, honesty about uncertainty. Baked into every response.</span>
+            <span class="de"><strong>3-Phasen-Workflow:</strong> Kl&auml;ren &rarr; Machen &rarr; Pr&uuml;fen. Keine Phase wird &uuml;bersprungen.<br><br><strong>Kognitive Modus-Erkennung:</strong> Erkennt automatisch ob du Recherche, Schreiben, Analyse oder Code brauchst und leitet an die richtigen Skills weiter.<br><br><strong>Routing-Tabelle:</strong> Bildet Skill-Namen auf Phasen ab. Die AI wei&szlig; welches Tool f&uuml;r welchen Aufgabentyp geeignet ist.<br><br><strong>Qualit&auml;tsprinzipien:</strong> Nachvollziehbarkeit, Quellenkritik, Ehrlichkeit bei Unsicherheit. In jede Antwort eingebaut.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Memory Architecture -->
+    <div class="arch-right">
+      <div class="memory-stack-label">
+        <span class="en">Memory Architecture</span>
+        <span class="de">Ged&auml;chtnis-Architektur</span>
+      </div>
+      <div class="memory-stack">
+        <div class="memory-layer layer-short" onclick="toggleMem(this)">
+          <h5>
+            <span class="en">Short-term</span>
+            <span class="de">Kurzzeit</span>
+          </h5>
+          <div class="mem-desc">
+            <span class="en">Current conversation (~200K tokens, 1 session)</span>
+            <span class="de">Aktuelle Konversation (~200K Tokens, 1 Session)</span>
+          </div>
+          <div class="mem-detail">
+            <span class="en">The active conversation window. Everything you say and every file the AI reads lives here. Limited by context window size. When it fills up, handoff saves the state.</span>
+            <span class="de">Das aktive Konversationsfenster. Alles was du sagst und jede Datei die die AI liest lebt hier. Begrenzt durch die Context-Window-Gr&ouml;&szlig;e. Wenn es voll ist, sichert Handoff den Zustand.</span>
+          </div>
+        </div>
+        <div class="memory-layer layer-mid" onclick="toggleMem(this)">
+          <h5>
+            <span class="en">Mid-term</span>
+            <span class="de">Mittelzeit</span>
+          </h5>
+          <div class="mem-desc">
+            <span class="en">Project states, routing log (weeks to months)</span>
+            <span class="de">Projekt-States, Routing-Log (Wochen bis Monate)</span>
+          </div>
+          <div class="mem-detail">
+            <span class="en">Project files track open todos, decisions, and progress. The routing log records which skills were used and why. Survives across sessions. Updated during work, not at session end.</span>
+            <span class="de">Projektdateien tracken offene Todos, Entscheidungen und Fortschritt. Das Routing-Log zeichnet auf welche Skills genutzt wurden und warum. &Uuml;berlebt Sessions. Wird w&auml;hrend der Arbeit aktualisiert.</span>
+          </div>
+        </div>
+        <div class="memory-layer layer-long" onclick="toggleMem(this)">
+          <h5>
+            <span class="en">Long-term</span>
+            <span class="de">Langzeit</span>
+          </h5>
+          <div class="mem-desc">
+            <span class="en">Config file, knowledge base, glossary (permanent)</span>
+            <span class="de">Config-Datei, Wissensbasis, Glossar (permanent)</span>
+          </div>
+          <div class="mem-detail">
+            <span class="en">The config file itself, Obsidian vaults, SQLite databases, and the memory file. These persist indefinitely and form the AI's long-term understanding of your work and preferences.</span>
+            <span class="de">Die Config-Datei selbst, Obsidian Vaults, SQLite-Datenbanken und die Memory-Datei. Diese bestehen unbegrenzt und bilden das langfristige Verst&auml;ndnis der AI f&uuml;r deine Arbeit und Pr&auml;ferenzen.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM: Optional Integrations -->
+    <div class="arch-bottom">
+      <div class="integration-label">
+        <span class="en">Optional Integrations</span>
+        <span class="de">Optionale Integrationen</span>
+      </div>
+      <div class="integration-grid">
+        <div class="integration-box">
+          <h5>&#x1F4D3; Obsidian</h5>
+          <p><span class="en">Knowledge vault via MCP. Your notes become the AI's context.</span><span class="de">Wissensvault via MCP. Deine Notizen werden zum Kontext der AI.</span></p>
+        </div>
+        <div class="integration-box">
+          <h5>&#x1F5C3;&#xFE0F; SQLite</h5>
+          <p><span class="en">Structured data, skill statistics, performance metrics.</span><span class="de">Strukturierte Daten, Skill-Statistiken, Performance-Metriken.</span></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================== SKILL CHAINS ==================== -->
+<section>
+  <div class="section-header">
+    <h2>
+      <span class="en">Skill Chains</span>
+      <span class="de">Skill-Ketten</span>
+    </h2>
+    <p class="section-sub">
+      <span class="en">Skills don't work in isolation. These feedback loops produce better results than any single skill.</span>
+      <span class="de">Skills arbeiten nicht isoliert. Diese Feedback-Schleifen produzieren bessere Ergebnisse als jeder einzelne Skill.</span>
+    </p>
+  </div>
+  <div class="section-divider" style="background: var(--accent);"></div>
+
+  <div class="chains-grid">
+    <div class="chain-card">
+      <h4>
+        <span class="en">1. Evaluator-Optimizer</span>
+        <span class="de">1. Evaluator-Optimierer</span>
+      </h4>
+      <div class="chain-flow">
+        <span class="chain-node node-build">express</span>
+        <span class="chain-arrow">&rarr;</span>
+        <span class="chain-node node-verify">signal-check</span>
+        <span class="chain-arrow">&rarr;</span>
+        <span class="chain-node node-build">express</span>
+        <span class="chain-arrow">&#x21BB;</span>
+      </div>
+      <p class="chain-desc">
+        <span class="en">Write, check substance, improve. Iterate until quality threshold is met.</span>
+        <span class="de">Schreiben, Substanz pr&uuml;fen, verbessern. Iterieren bis die Qualit&auml;tsschwelle erreicht ist.</span>
+      </p>
+    </div>
+    <div class="chain-card">
+      <h4>
+        <span class="en">2. Evaluator-Challenger</span>
+        <span class="de">2. Evaluator-Challenger</span>
+      </h4>
+      <div class="chain-flow">
+        <span class="chain-node node-build">express</span>
+        <span class="chain-arrow">&rarr;</span>
+        <span class="chain-node node-verify">challenge</span>
+        <span class="chain-arrow">&rarr;</span>
+        <span class="chain-node node-build">express</span>
+        <span class="chain-arrow">&#x21BB;</span>
+      </div>
+      <p class="chain-desc">
+        <span class="en">Write, stress-test, harden. Adversarial review strengthens arguments.</span>
+        <span class="de">Schreiben, stressen, h&auml;rten. Adversariales Review st&auml;rkt Argumente.</span>
+      </p>
+    </div>
+    <div class="chain-card">
+      <h4>
+        <span class="en">3. Quality Gate Loop</span>
+        <span class="de">3. Quality-Gate-Schleife</span>
+      </h4>
+      <div class="chain-flow">
+        <span class="chain-node node-build">express</span>
+        <span class="chain-arrow">&rarr;</span>
+        <span class="chain-node node-verify">quality-gate</span>
+        <span class="chain-arrow">&rarr;</span>
+        <span class="chain-node node-build">express</span>
+        <span class="chain-arrow">&#x21BB;</span>
+      </div>
+      <p class="chain-desc">
+        <span class="en">Write, verify with external checks, revise. Risk-based triage determines check depth.</span>
+        <span class="de">Schreiben, mit externen Checks verifizieren, &uuml;berarbeiten. Risikobasierte Triage bestimmt die Pr&uuml;ftiefe.</span>
+      </p>
+    </div>
+    <div class="chain-card">
+      <h4>
+        <span class="en">4. Knowledge Cycle</span>
+        <span class="de">4. Wissenszyklus</span>
+      </h4>
+      <div class="chain-flow">
+        <span class="chain-node node-clarify">capture</span>
+        <span class="chain-arrow">&rarr;</span>
+        <span class="chain-node node-clarify">distill</span>
+        <span class="chain-arrow">&rarr;</span>
+        <span class="chain-node node-build">express</span>
+        <span class="chain-arrow">&rarr;</span>
+        <span class="chain-node node-verify">signal-check</span>
+      </div>
+      <p class="chain-desc">
+        <span class="en">Capture raw input, distill to essence, express as output, verify quality. The learning pipeline.</span>
+        <span class="de">Rohen Input erfassen, zum Kern destillieren, als Output ausdr&uuml;cken, Qualit&auml;t pr&uuml;fen. Die Lernpipeline.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== THE WORKFLOW ==================== -->
+<section>
+  <div class="section-header">
+    <h2>
+      <span class="en">The Workflow</span>
+      <span class="de">Der Workflow</span>
+    </h2>
+    <p class="section-sub">
+      <span class="en">Every task flows through 3 phases. No phase gets skipped.</span>
+      <span class="de">Jede Aufgabe durchl&auml;uft 3 Phasen. Keine Phase wird &uuml;bersprungen.</span>
+    </p>
+  </div>
+  <div class="section-divider" style="background: linear-gradient(90deg, var(--blue), var(--green), var(--red));"></div>
+
+  <div class="workflow-flow">
+    <div class="workflow-phase phase-clarify">
+      <h4>
+        <span class="en">Clarify</span>
+        <span class="de">Kl&auml;ren</span>
+      </h4>
+      <p class="phase-question">
+        <span class="en">&ldquo;What&rsquo;s the problem?&rdquo;</span>
+        <span class="de">&bdquo;Was ist das Problem?&ldquo;</span>
+      </p>
+      <p class="phase-skills">analyze, distill, capture</p>
+      <span class="phase-result">
+        <span class="en">Clear problem definition</span>
+        <span class="de">Klare Problemdefinition</span>
+      </span>
+    </div>
+    <div class="phase-arrow">&rarr;</div>
+    <div class="workflow-phase phase-build">
+      <h4>
+        <span class="en">Build</span>
+        <span class="de">Machen</span>
+      </h4>
+      <p class="phase-question">
+        <span class="en">&ldquo;Produce the output&rdquo;</span>
+        <span class="de">&bdquo;Output produzieren&ldquo;</span>
+      </p>
+      <p class="phase-skills">express, capture</p>
+      <span class="phase-result">
+        <span class="en">Concrete output</span>
+        <span class="de">Konkreter Output</span>
+      </span>
+    </div>
+    <div class="phase-arrow">&rarr;</div>
+    <div class="workflow-phase phase-verify">
+      <h4>
+        <span class="en">Verify</span>
+        <span class="de">Pr&uuml;fen</span>
+      </h4>
+      <p class="phase-question">
+        <span class="en">&ldquo;Is it good enough?&rdquo;</span>
+        <span class="de">&bdquo;Ist es gut genug?&ldquo;</span>
+      </p>
+      <p class="phase-skills">signal-check, quality-gate, challenge</p>
+      <span class="phase-result">
+        <span class="en">Finished result</span>
+        <span class="de">Fertiges Ergebnis</span>
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONTEXT MANAGEMENT ==================== -->
+<section>
+  <div class="section-header">
+    <h2>
+      <span class="en">Context Management</span>
+      <span class="de">Kontext-Management</span>
+    </h2>
+    <p class="section-sub">
+      <span class="en">How sessions chain together without losing state. The hooks handle it automatically.</span>
+      <span class="de">Wie Sessions verkettet werden ohne State zu verlieren. Die Hooks erledigen das automatisch.</span>
+    </p>
+  </div>
+  <div class="section-divider" style="background: var(--orange);"></div>
+
+  <div class="context-visual">
+    <div class="context-card">
+      <h4>&#x1F4CA; <code>context-statusline.js</code></h4>
+      <p>
+        <span class="en">Shows context usage as a percentage in real-time. You always know how much capacity is left.</span>
+        <span class="de">Zeigt den Kontext-Verbrauch als Prozentanzeige in Echtzeit. Du wei&szlig;t immer wie viel Kapazit&auml;t &uuml;brig ist.</span>
+      </p>
+    </div>
+    <div class="context-card">
+      <h4>&#x26A0;&#xFE0F; <code>context-monitor.js</code></h4>
+      <p>
+        <span class="en">Warns at 35% remaining. Triggers handoff at 25%. Prevents mid-task context loss.</span>
+        <span class="de">Warnt bei 35% verbleibend. L&ouml;st Handoff bei 25% aus. Verhindert Context-Verlust mitten in der Aufgabe.</span>
+      </p>
+    </div>
+    <div class="context-card">
+      <h4>&#x1F504; <code>session-start.sh</code></h4>
+      <p>
+        <span class="en">Reads previous handoff at startup. The new session continues where the last one stopped.</span>
+        <span class="de">Liest vorherigen Handoff beim Start. Die neue Session macht dort weiter wo die letzte aufgeh&ouml;rt hat.</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="context-cycle">
+    <span class="cycle-node">
+      <span class="en">Session</span>
+      <span class="de">Session</span>
+    </span>
+    <span class="cycle-arrow">&rarr;</span>
+    <span class="cycle-node">
+      <span class="en">Monitor</span>
+      <span class="de">Monitor</span>
+    </span>
+    <span class="cycle-arrow">&rarr;</span>
+    <span class="cycle-node">
+      <span class="en">Warning (35%)</span>
+      <span class="de">Warnung (35%)</span>
+    </span>
+    <span class="cycle-arrow">&rarr;</span>
+    <span class="cycle-node">
+      <span class="en">Handoff (25%)</span>
+      <span class="de">Handoff (25%)</span>
+    </span>
+    <span class="cycle-arrow">&rarr;</span>
+    <span class="cycle-node">
+      <span class="en">New Session</span>
+      <span class="de">Neue Session</span>
+    </span>
+    <span class="cycle-arrow">&rarr;</span>
+    <span class="cycle-node">
+      <span class="en">Reads Handoff</span>
+      <span class="de">Liest Handoff</span>
+    </span>
+    <span class="cycle-arrow">&rarr;</span>
+    <span class="cycle-node">
+      <span class="en">Continues</span>
+      <span class="de">Weiter</span>
+    </span>
+    <span class="cycle-arrow">&#x21BB;</span>
+  </div>
+</section>
+
+<!-- ==================== GET STARTED ==================== -->
+<section>
+  <div class="section-header">
+    <h2>
+      <span class="en">Get Started</span>
+      <span class="de">Loslegen</span>
+    </h2>
+    <p class="section-sub">
+      <span class="en">5 minutes from clone to first intelligent session.</span>
+      <span class="de">5 Minuten vom Clone bis zur ersten intelligenten Session.</span>
+    </p>
+  </div>
+  <div class="section-divider" style="background: var(--green);"></div>
+
+  <div class="start-callout">
+    <h3>
+      <span class="en">Setup</span>
+      <span class="de">Einrichtung</span>
+    </h3>
+    <p class="start-sub">
+      <span class="en">Clone, copy, start. That's it.</span>
+      <span class="de">Clonen, kopieren, starten. Das war's.</span>
+    </p>
+
+    <div class="code-block">
+      <span class="comment"># Clone the starter kit</span><br>
+      <span class="cmd">git clone https://github.com/janrummel/claude-orchestrator-starter.git</span><br>
+      <span class="cmd">cd claude-orchestrator-starter</span><br>
+      <br>
+      <span class="comment"># Copy to your Claude config</span><br>
+      <span class="cmd">cp CLAUDE.md.example <span class="highlight">~/.claude/CLAUDE.md</span></span><br>
+      <span class="cmd">cp -r orchestrator/ <span class="highlight">~/.claude/orchestrator/</span></span><br>
+      <span class="cmd">cp -r memory/ <span class="highlight">~/.claude/memory/</span></span><br>
+      <br>
+      <span class="comment"># Start Claude Code</span><br>
+      <span class="cmd">claude</span>
+    </div>
+
+    <div class="start-try">
+      <span class="en">Your first session &mdash; try typing:</span>
+      <span class="de">Deine erste Session &mdash; probiere:</span>
+      <br>
+      <code>
+        <span class="en">analyze this topic: [something you're curious about]</span>
+        <span class="de">analyze this topic: [ein Thema das dich interessiert]</span>
+      </code>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== EXAMPLE FLOW ==================== -->
+<section>
+  <div class="section-header">
+    <h2>
+      <span class="en">Example Flow</span>
+      <span class="de">Beispiel-Ablauf</span>
+    </h2>
+    <p class="section-sub">
+      <span class="en">A real task, step by step. Watch how the system routes and verifies.</span>
+      <span class="de">Eine echte Aufgabe, Schritt f&uuml;r Schritt. Sieh wie das System routet und verifiziert.</span>
+    </p>
+  </div>
+  <div class="section-divider" style="background: linear-gradient(90deg, var(--accent), var(--green));"></div>
+
+  <div class="example-timeline">
+    <div class="example-step step-user">
+      <div class="step-dot"></div>
+      <div class="step-label label-user">
+        <span class="en">You</span>
+        <span class="de">Du</span>
+      </div>
+      <p>
+        <span class="en">&ldquo;Summarize this article about AI safety&rdquo;</span>
+        <span class="de">&bdquo;Fasse diesen Artikel &uuml;ber AI Safety zusammen&ldquo;</span>
+      </p>
+    </div>
+
+    <div class="example-step step-system">
+      <div class="step-dot"></div>
+      <div class="step-label label-system">
+        <span class="en">Config routes</span>
+        <span class="de">Config routet</span>
+      </div>
+      <p>
+        <span class="en">&ldquo;summarize&rdquo; &rarr; distill skill. 4-layer progressive summarization starts.</span>
+        <span class="de">&bdquo;zusammenfassen&ldquo; &rarr; Distill-Skill. 4-Schichten progressive Zusammenfassung startet.</span>
+      </p>
+    </div>
+
+    <div class="example-step step-system">
+      <div class="step-dot"></div>
+      <div class="step-label label-system">
+        <span class="en">Distill output</span>
+        <span class="de">Distill-Ergebnis</span>
+      </div>
+      <p>
+        <span class="en">4-layer summary delivered. Layer 4 = executive summary in 3 sentences.</span>
+        <span class="de">4-Schichten-Zusammenfassung geliefert. Schicht 4 = Executive Summary in 3 S&auml;tzen.</span>
+      </p>
+    </div>
+
+    <div class="example-step step-system">
+      <div class="step-dot"></div>
+      <div class="step-label label-system">
+        <span class="en">System suggests</span>
+        <span class="de">System schl&auml;gt vor</span>
+      </div>
+      <p>
+        <span class="en">&ldquo;Express this as a blog post?&rdquo;</span>
+        <span class="de">&bdquo;Als Blogpost ausformulieren?&ldquo;</span>
+      </p>
+    </div>
+
+    <div class="example-step step-user">
+      <div class="step-dot"></div>
+      <div class="step-label label-user">
+        <span class="en">You</span>
+        <span class="de">Du</span>
+      </div>
+      <p>
+        <span class="en">&ldquo;Yes, then check quality&rdquo;</span>
+        <span class="de">&bdquo;Ja, dann Qualit&auml;t pr&uuml;fen&ldquo;</span>
+      </p>
+    </div>
+
+    <div class="example-step step-system">
+      <div class="step-dot"></div>
+      <div class="step-label label-system">
+        <span class="en">Skill chain executes</span>
+        <span class="de">Skill-Kette wird ausgef&uuml;hrt</span>
+      </div>
+      <p>
+        <span class="en">express &rarr; signal-check &rarr; quality-gate. Three skills in sequence.</span>
+        <span class="de">Express &rarr; Signal-Check &rarr; Quality-Gate. Drei Skills in Sequenz.</span>
+      </p>
+    </div>
+
+    <div class="example-step step-system">
+      <div class="step-dot"></div>
+      <div class="step-label label-system">
+        <span class="en">Result</span>
+        <span class="de">Ergebnis</span>
+      </div>
+      <p>
+        <span class="en">Finished, verified blog post. Quality score: 0.82. Sources checked. Ready to publish.</span>
+        <span class="de">Fertiger, verifizierter Blogpost. Quality-Score: 0.82. Quellen gepr&uuml;ft. Bereit zur Ver&ouml;ffentlichung.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<div class="footer">
+  <p>
+    <a href="https://github.com/janrummel/claude-orchestrator-starter" target="_blank" rel="noopener">&#x2B50; GitHub: claude-orchestrator-starter</a>
+  </p>
+  <p>
+    <span class="en">Works with any AI CLI tool that reads project files.</span>
+    <span class="de">Funktioniert mit jedem AI CLI Tool das Projektdateien liest.</span>
+  </p>
+  <p style="margin-top: 0.5rem; font-style: italic;">
+    <span class="en">Built with the system it describes.</span>
+    <span class="de">Gebaut mit dem System das es beschreibt.</span>
+  </p>
+</div>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+  // Language switcher
+  function setLang(lang) {
+    document.documentElement.lang = lang;
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-de').classList.toggle('active', lang === 'de');
+    localStorage.setItem('ai-learning-lang', lang);
+  }
+
+  // Toggle detail panels on brain box
+  function toggleDetail(el) {
+    var panel = el.querySelector('.detail-panel');
+    if (!panel) return;
+    var isOpen = panel.classList.contains('open');
+    closeAll();
+    if (!isOpen) panel.classList.add('open');
+  }
+
+  // Toggle skill details
+  function toggleSkill(el) {
+    var panel = el.querySelector('.skill-detail');
+    if (!panel) return;
+    var isOpen = panel.classList.contains('open');
+    closeAll();
+    if (!isOpen) panel.classList.add('open');
+  }
+
+  // Toggle memory details
+  function toggleMem(el) {
+    var panel = el.querySelector('.mem-detail');
+    if (!panel) return;
+    var isOpen = panel.classList.contains('open');
+    closeAll();
+    if (!isOpen) panel.classList.add('open');
+  }
+
+  // Close all open panels
+  function closeAll() {
+    document.querySelectorAll('.detail-panel.open').forEach(function(p) { p.classList.remove('open'); });
+    document.querySelectorAll('.skill-detail.open').forEach(function(p) { p.classList.remove('open'); });
+    document.querySelectorAll('.mem-detail.open').forEach(function(p) { p.classList.remove('open'); });
+  }
+
+  // Close panels when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.brain-box') && !e.target.closest('.skill-box') && !e.target.closest('.memory-layer')) {
+      closeAll();
+    }
+  });
+
+  // Initialize language
+  var saved = localStorage.getItem('ai-learning-lang');
+  if (saved) { setLang(saved); }
+  else if (navigator.language.startsWith('de')) { setLang('de'); }
+</script>
+
+</body>
+</html>
