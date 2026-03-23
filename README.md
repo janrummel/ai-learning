@@ -37,7 +37,7 @@ Free, open-source AI learning ecosystem — two tracks, five courses, from first
 
 | | Course | For | Scope | Start |
 |---|--------|-----|-------|-------|
-| 📁 | [**GitHub für Nicht-Programmierer**](https://planck-lab.github.io/github-fuer-nicht-programmierer/) | Everyone | 6 modules | [Website](https://planck-lab.github.io/github-fuer-nicht-programmierer/) · [GitHub](https://github.com/planck-lab/github-fuer-nicht-programmierer) |
+| 📁 | [**GitHub für Nicht-Programmierer**](https://janrummel.github.io/github-fuer-nicht-programmierer/) | Everyone | 6 modules | [Website](https://janrummel.github.io/github-fuer-nicht-programmierer/) · [GitHub](https://github.com/janrummel/github-fuer-nicht-programmierer) |
 
 ## What You'll Learn
 
@@ -88,7 +88,7 @@ Each course lives in its own repository:
 - [ai-product-thinking](https://github.com/janrummel/ai-product-thinking)
 - [level-up-ai](https://github.com/janrummel/level-up-ai)
 - [claude-orchestrator-starter](https://github.com/janrummel/claude-orchestrator-starter)
-- [github-fuer-nicht-programmierer](https://github.com/planck-lab/github-fuer-nicht-programmierer)
+- [github-fuer-nicht-programmierer](https://github.com/janrummel/github-fuer-nicht-programmierer)
 
 Open an issue in the relevant repo, or submit a pull request.
 
