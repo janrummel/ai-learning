@@ -6,7 +6,7 @@
 
 Free, open-source AI learning ecosystem — two tracks, five courses, from first prompt to production agent.
 
-**113+ lessons · 5 courses · EN + DE · always free**
+**119+ lessons · 6 courses · EN + DE · always free**
 
 [**→ Start Learning**](https://janrummel.github.io/ai-learning/)
 
@@ -38,6 +38,7 @@ Free, open-source AI learning ecosystem — two tracks, five courses, from first
 | | Course | For | Scope | Start |
 |---|--------|-----|-------|-------|
 | 📁 | [**GitHub für Nicht-Programmierer**](https://janrummel.github.io/github-fuer-nicht-programmierer/) | Everyone | 6 modules | [Website](https://janrummel.github.io/github-fuer-nicht-programmierer/) · [GitHub](https://github.com/janrummel/github-fuer-nicht-programmierer) |
+| 🗄️ | [**Obsidian für Einsteiger**](https://janrummel.github.io/obsidian-fuer-einsteiger/) | Knowledge Workers | 6 modules | [Website](https://janrummel.github.io/obsidian-fuer-einsteiger/) · [GitHub](https://github.com/janrummel/obsidian-fuer-einsteiger) |
 
 ## What You'll Learn
 
@@ -48,6 +49,7 @@ Free, open-source AI learning ecosystem — two tracks, five courses, from first
 | 🛠️ **Level Up AI** | Build agents, write evals, and ship AI features — with tests, not hope. |
 | ⚡ **Orchestrator Kit** | Set up a Claude-based agent with memory, skills, scheduling, and Telegram integration. |
 | 📁 **GitHub für Nicht-Programmierer** | Use GitHub for version control, collaboration, and publishing — without code. |
+| 🗄️ **Obsidian für Einsteiger** | Build a personal knowledge system — from first note to AI-agent integration. |
 
 ## Getting Started
 
@@ -89,6 +91,7 @@ Each course lives in its own repository:
 - [level-up-ai](https://github.com/janrummel/level-up-ai)
 - [claude-orchestrator-starter](https://github.com/janrummel/claude-orchestrator-starter)
 - [github-fuer-nicht-programmierer](https://github.com/janrummel/github-fuer-nicht-programmierer)
+- [obsidian-fuer-einsteiger](https://github.com/janrummel/obsidian-fuer-einsteiger)
 
 Open an issue in the relevant repo, or submit a pull request.
 
