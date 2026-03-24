@@ -10,6 +10,13 @@ Free, open-source AI learning ecosystem — two tracks, five courses, from first
 
 [**→ Start Learning**](https://janrummel.github.io/ai-learning/)
 
+<p>
+  <img src="https://img.shields.io/badge/courses-7-2997FF" alt="Courses">
+  <img src="https://img.shields.io/badge/lessons-130%2B-F1C40F" alt="Lessons">
+  <img src="https://img.shields.io/badge/languages-EN%20%2B%20DE-58a6ff" alt="Languages">
+  <img src="https://img.shields.io/badge/cost-free-brightgreen" alt="Free">
+</p>
+
 ---
 
 </div>
