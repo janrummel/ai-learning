@@ -1,0 +1,129 @@
+/* AI Learning — Shared Design System
+   Version: 1.0.0 | 2026-03-26
+   Source: https://janrummel.github.io/ai-learning/shared-style.css
+   Used by: agent-literacy, github-fuer-nicht-programmierer, obsidian-fuer-einsteiger
+   
+   Import: <link rel="stylesheet" href="https://janrummel.github.io/ai-learning/shared-style.css">
+   Then add course-specific CSS in a local <style> block or local .css file.
+*/
+
+/* === Variables === */
+:root {
+  --bg: #0d1117; --surface: #161b22; --border: #30363d;
+  --text: #e6edf3; --muted: #9ca3af; --accent: #58a6ff;
+  --green: #3fb950; --orange: #d29922; --purple: #8957e5;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #ffffff; --surface: #f6f8fa; --border: #d1d5db;
+    --text: #1f2937; --muted: #6b7280; --accent: #2563eb;
+    --green: #16a34a; --orange: #d97706; --purple: #7c3aed;
+  }
+}
+
+/* === Reset === */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { overflow-x: hidden; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro', system-ui, sans-serif;
+  background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.7;
+  overflow-x: hidden;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* === Skip Link (Accessibility) === */
+.skip-link {
+  position: absolute; top: -40px; left: 0; padding: 0.5rem 1rem;
+  background: var(--accent); color: var(--bg); z-index: 1000;
+  font-weight: 600; border-radius: 0 0 8px 0;
+}
+.skip-link:focus { top: 0; }
+
+/* === Language Switch === */
+.lang-switch {
+  position: fixed; top: 1rem; right: 1.5rem; z-index: 100;
+  display: flex; gap: 0.25rem; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.2rem;
+}
+.lang-btn {
+  padding: 0.3rem 0.6rem; border-radius: 6px; border: none;
+  background: transparent; color: var(--muted); cursor: pointer;
+  font-size: 0.8rem; font-weight: 600; transition: all 0.2s;
+}
+.lang-btn.active { background: var(--accent); color: var(--bg); }
+.lang-btn:hover:not(.active) { color: var(--text); }
+[lang="de"] .en, [lang="en"] .de { display: none; }
+
+/* === Layout === */
+.container { max-width: 720px; width: 100%; margin: 0 auto; padding: 5rem 2rem 2rem; }
+
+/* === Typography === */
+h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+h2 { font-size: 1.3rem; font-weight: 800; margin: 2.5rem 0 0.75rem; color: var(--accent); }
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.5rem 0 0.5rem; }
+.subtitle { color: var(--muted); margin-bottom: 2rem; }
+
+/* === Step Card (shared across courses) === */
+.step {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 1.5rem; margin-bottom: 1.5rem;
+}
+.step-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+.step-num {
+  width: 32px; height: 32px; background: var(--accent); color: var(--bg);
+  border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.9rem; flex-shrink: 0;
+}
+.step-title { font-weight: 700; font-size: 1.05rem; }
+
+/* === Callouts === */
+.callout {
+  border-radius: 12px; padding: 1rem 1.25rem; margin: 1.5rem 0;
+  font-size: 0.9rem; line-height: 1.6;
+  border-left: 4px solid var(--border); background: var(--surface);
+}
+.callout.blue { border-left-color: var(--accent); background: rgba(88,166,255,.06); }
+.callout.green { border-left-color: var(--green); background: rgba(63,185,80,.06); }
+.callout.orange { border-left-color: var(--orange); background: rgba(210,153,34,.06); }
+.callout.red { border-left-color: #f85149; background: rgba(248,81,73,.06); }
+.callout.purple { border-left-color: var(--purple); background: rgba(137,87,229,.06); }
+
+/* === Back to Top === */
+.back-to-top {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 100;
+  background: var(--surface); color: var(--accent); border: 1px solid var(--border);
+  border-radius: 50%; width: 40px; height: 40px; font-size: 1.2rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.2s, transform 0.2s; opacity: 0.7;
+}
+.back-to-top:hover { opacity: 1; transform: translateY(-2px); }
+
+/* === Footer === */
+.footer {
+  text-align: center; padding: 2rem 1rem; margin-top: 3rem;
+  border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted);
+}
+.footer a { color: var(--accent); }
+
+/* === Details/Summary === */
+details { margin: 0.75rem 0; }
+summary {
+  cursor: pointer; color: var(--accent); font-size: 0.85rem;
+  font-weight: 600; padding: 0.25rem 0;
+}
+summary:hover { text-decoration: underline; }
+
+/* === Lists === */
+ul, ol { padding-left: 1.5rem; margin: 0.5rem 0; }
+li { margin-bottom: 0.4rem; }
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .lang-switch { top: 0.75rem; right: 1rem; }
+  .container { padding: 4rem 1.25rem 2rem; }
+}
+@media (max-width: 640px) {
+  h1 { font-size: 1.8rem; }
+  .container { padding: 3.5rem 1rem 1.5rem; }
+}
