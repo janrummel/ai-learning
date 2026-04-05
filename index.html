@@ -103,8 +103,22 @@
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
+  /* Course Previews */
+  .previews { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+  .preview { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; }
+  .preview:hover { border-color: var(--accent); }
+  .preview h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+  .preview-steps { display: flex; flex-direction: column; gap: 0.35rem; }
+  .preview-step { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; }
+  .preview-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .preview-line { width: 1px; height: 10px; background: var(--border); margin-left: 3.5px; }
+  .preview-bar { display: flex; gap: 2px; margin-top: 0.5rem; }
+  .preview-bar-seg { height: 6px; border-radius: 3px; flex: 1; }
+  .preview-link { display: inline-block; margin-top: 0.75rem; font-size: 0.75rem; font-weight: 600; color: var(--accent); }
+
   @media (max-width: 768px) {
     .worlds { grid-template-columns: 1fr; }
+    .previews { grid-template-columns: 1fr; }
     .hero { padding-top: 3rem; }
     .hero h1 { font-size: 1.7rem; }
     .transform-grid { grid-template-columns: 1fr; text-align: center; }
@@ -210,6 +224,149 @@
         <span class="de">Bauen starten &rarr;</span>
       </a>
     </div>
+  </div>
+</section>
+
+<!-- 2b. AT A GLANCE -->
+<section class="reveal">
+  <h2 style="font-size:1.5rem;font-weight:800;text-align:center;margin-bottom:0.4rem;">
+    <span class="en">At a Glance</span><span class="de">Auf einen Blick</span>
+  </h2>
+  <p style="color:var(--muted);font-size:0.85rem;text-align:center;margin-bottom:1.5rem;">
+    <span class="en">What you'll learn in each course.</span><span class="de">Was du in jedem Kurs lernst.</span>
+  </p>
+  <div class="previews">
+
+    <!-- AI Fluency -->
+    <a href="https://janrummel.github.io/ai-fluency/" class="preview" style="text-decoration:none;color:var(--text);border-top:3px solid var(--accent);">
+      <h4>💬 AI Fluency</h4>
+      <div class="preview-steps">
+        <div class="preview-step"><div class="preview-dot" style="background:var(--accent);opacity:0.4;"></div><span class="en">First Steps</span><span class="de">Erste Schritte</span></div>
+        <div class="preview-line"></div>
+        <div class="preview-step"><div class="preview-dot" style="background:var(--accent);opacity:0.6;"></div><span class="en">Intentional Prompting</span><span class="de">Bewusstes Prompting</span></div>
+        <div class="preview-line"></div>
+        <div class="preview-step"><div class="preview-dot" style="background:var(--accent);opacity:0.8;"></div><span class="en">Context as Infrastructure</span><span class="de">Kontext als Infrastruktur</span></div>
+        <div class="preview-line"></div>
+        <div class="preview-step"><div class="preview-dot" style="background:var(--accent);"></div><span class="en">AI as Coworker</span><span class="de">AI als Kollege</span></div>
+      </div>
+      <div class="preview-bar">
+        <div class="preview-bar-seg" style="background:var(--accent);opacity:0.4;"></div>
+        <div class="preview-bar-seg" style="background:var(--accent);opacity:0.6;"></div>
+        <div class="preview-bar-seg" style="background:var(--accent);opacity:0.8;"></div>
+        <div class="preview-bar-seg" style="background:var(--accent);"></div>
+      </div>
+      <span class="preview-link"><span class="en">4 levels &middot; 20 lessons &rarr;</span><span class="de">4 Level &middot; 20 Lektionen &rarr;</span></span>
+    </a>
+
+    <!-- AI Product Thinking -->
+    <a href="https://janrummel.github.io/ai-product-thinking/" class="preview" style="text-decoration:none;color:var(--text);border-top:3px solid var(--orange);">
+      <h4>🧭 AI Product Thinking</h4>
+      <div class="preview-steps">
+        <div class="preview-step"><div class="preview-dot" style="background:var(--orange);opacity:0.5;"></div><span class="en">Foundations — When to say no to AI</span><span class="de">Grundlagen — Wann Nein zu AI sagen</span></div>
+        <div class="preview-line"></div>
+        <div class="preview-step"><div class="preview-dot" style="background:var(--orange);opacity:0.75;"></div><span class="en">Builder — Build vs. buy vs. blend</span><span class="de">Builder — Build vs. Buy vs. Blend</span></div>
+        <div class="preview-line"></div>
+        <div class="preview-step"><div class="preview-dot" style="background:var(--orange);"></div><span class="en">Leader — Strategy, governance, hiring</span><span class="de">Leader — Strategie, Governance, Hiring</span></div>
+      </div>
+      <div class="preview-bar">
+        <div class="preview-bar-seg" style="background:var(--orange);opacity:0.5;"></div>
+        <div class="preview-bar-seg" style="background:var(--orange);opacity:0.5;"></div>
+        <div class="preview-bar-seg" style="background:var(--orange);opacity:0.5;"></div>
+        <div class="preview-bar-seg" style="background:var(--orange);opacity:0.75;"></div>
+        <div class="preview-bar-seg" style="background:var(--orange);opacity:0.75;"></div>
+        <div class="preview-bar-seg" style="background:var(--orange);opacity:0.75;"></div>
+        <div class="preview-bar-seg" style="background:var(--orange);"></div>
+        <div class="preview-bar-seg" style="background:var(--orange);"></div>
+        <div class="preview-bar-seg" style="background:var(--orange);"></div>
+      </div>
+      <span class="preview-link"><span class="en">3 tracks &middot; 9 chapters &middot; 46 lessons &rarr;</span><span class="de">3 Tracks &middot; 9 Kapitel &middot; 46 Lektionen &rarr;</span></span>
+    </a>
+
+    <!-- Agent Literacy -->
+    <a href="https://planck-lab.github.io/agent-systems/" class="preview" style="text-decoration:none;color:var(--text);border-top:3px solid var(--purple);">
+      <h4>🤖 Agent Literacy</h4>
+      <div class="preview-steps">
+        <div class="preview-step"><div class="preview-dot" style="background:var(--purple);"></div><span class="en">What just happened?</span><span class="de">Was war das gerade?</span></div>
+        <div class="preview-line"></div>
+        <div class="preview-step"><div class="preview-dot" style="background:var(--purple);"></div><span class="en">Can I trust this?</span><span class="de">Kann ich dem vertrauen?</span></div>
+        <div class="preview-line"></div>
+        <div class="preview-step"><div class="preview-dot" style="background:var(--purple);"></div><span class="en">How does it work?</span><span class="de">Wie funktioniert das?</span></div>
+        <div class="preview-line"></div>
+        <div class="preview-step"><div class="preview-dot" style="background:var(--purple);"></div><span class="en">What can go wrong?</span><span class="de">Was kann schiefgehen?</span></div>
+        <div class="preview-line"></div>
+        <div class="preview-step"><div class="preview-dot" style="background:var(--purple);"></div><span class="en">Your agent strategy</span><span class="de">Deine Agent-Strategie</span></div>
+      </div>
+      <span class="preview-link"><span class="en">5 modules &middot; ~1 hour &rarr;</span><span class="de">5 Module &middot; ~1 Stunde &rarr;</span></span>
+    </a>
+
+    <!-- Level Up AI -->
+    <a href="https://janrummel.github.io/level-up-ai/" class="preview" style="text-decoration:none;color:var(--text);border-top:3px solid var(--engineer);">
+      <h4>⚡ Level Up AI</h4>
+      <div class="preview-steps">
+        <div class="preview-step"><div class="preview-dot" style="background:var(--engineer);opacity:0.3;"></div><span style="color:var(--muted);">1–2</span> <span class="en">SDK Basics &middot; LLM Fundamentals</span><span class="de">SDK Basics &middot; LLM Grundlagen</span></div>
+        <div class="preview-line"></div>
+        <div class="preview-step"><div class="preview-dot" style="background:var(--engineer);opacity:0.5;"></div><span style="color:var(--muted);">3–4</span> <span class="en">Agents &amp; MCP &middot; Persistence</span><span class="de">Agents &amp; MCP &middot; Persistenz</span></div>
+        <div class="preview-line"></div>
+        <div class="preview-step"><div class="preview-dot" style="background:var(--engineer);opacity:0.7;"></div><span style="color:var(--muted);">5–6</span> <span class="en">Context Engineering &middot; Evals</span><span class="de">Context Engineering &middot; Evals</span></div>
+        <div class="preview-line"></div>
+        <div class="preview-step"><div class="preview-dot" style="background:var(--engineer);"></div><span style="color:var(--muted);">7–9</span> <span class="en">Streaming &middot; Workflows &middot; Advanced</span><span class="de">Streaming &middot; Workflows &middot; Advanced</span></div>
+      </div>
+      <div class="preview-bar">
+        <div class="preview-bar-seg" style="background:var(--engineer);opacity:0.3;"></div>
+        <div class="preview-bar-seg" style="background:var(--engineer);opacity:0.3;"></div>
+        <div class="preview-bar-seg" style="background:var(--engineer);opacity:0.5;"></div>
+        <div class="preview-bar-seg" style="background:var(--engineer);opacity:0.5;"></div>
+        <div class="preview-bar-seg" style="background:var(--engineer);opacity:0.7;"></div>
+        <div class="preview-bar-seg" style="background:var(--engineer);opacity:0.7;"></div>
+        <div class="preview-bar-seg" style="background:var(--engineer);opacity:0.85;"></div>
+        <div class="preview-bar-seg" style="background:var(--engineer);opacity:0.9;"></div>
+        <div class="preview-bar-seg" style="background:var(--engineer);"></div>
+      </div>
+      <span class="preview-link"><span class="en">9 levels &middot; 41 challenges &middot; TypeScript &rarr;</span><span class="de">9 Level &middot; 41 Challenges &middot; TypeScript &rarr;</span></span>
+    </a>
+
+    <!-- Claude Code Starter Kit -->
+    <a href="https://janrummel.github.io/ai-learning/system/starter/" class="preview" style="text-decoration:none;color:var(--text);border-top:3px solid var(--green);">
+      <h4>🏗️ Claude Code Starter Kit</h4>
+      <div style="display:flex;gap:0.5rem;margin-bottom:0.5rem;">
+        <div style="flex:1;text-align:center;padding:0.4rem;background:rgba(88,166,255,0.1);border-radius:6px;font-size:0.7rem;font-weight:600;color:var(--accent);">
+          <span class="en">Clarify</span><span class="de">Klären</span>
+        </div>
+        <div style="flex:1;text-align:center;padding:0.4rem;background:rgba(63,185,80,0.1);border-radius:6px;font-size:0.7rem;font-weight:600;color:var(--green);">
+          <span class="en">Build</span><span class="de">Machen</span>
+        </div>
+        <div style="flex:1;text-align:center;padding:0.4rem;background:rgba(212,115,74,0.1);border-radius:6px;font-size:0.7rem;font-weight:600;color:var(--orange);">
+          <span class="en">Verify</span><span class="de">Prüfen</span>
+        </div>
+      </div>
+      <div class="preview-steps">
+        <div class="preview-step"><div class="preview-dot" style="background:var(--green);"></div><span class="en">Skills &middot; Memory &middot; Hooks</span><span class="de">Skills &middot; Memory &middot; Hooks</span></div>
+        <div class="preview-step"><div class="preview-dot" style="background:var(--green);"></div><span class="en">CLAUDE.md &middot; Project State</span><span class="de">CLAUDE.md &middot; Projekt-State</span></div>
+        <div class="preview-step"><div class="preview-dot" style="background:var(--green);"></div><span class="en">Quality Gates &middot; Context Monitor</span><span class="de">Quality Gates &middot; Context Monitor</span></div>
+      </div>
+      <span class="preview-link"><span class="en">Blueprint &middot; 5 min setup &rarr;</span><span class="de">Blueprint &middot; 5 Min Setup &rarr;</span></span>
+    </a>
+
+    <!-- Agent Architecture Kit -->
+    <a href="https://planck-lab.github.io/agent-system-starter-kit/" class="preview" style="text-decoration:none;color:var(--text);border-top:3px solid var(--purple);">
+      <h4>🧩 Agent Architecture Kit</h4>
+      <div style="display:flex;flex-direction:column;gap:0.3rem;">
+        <div style="padding:0.35rem 0.6rem;background:rgba(167,139,250,0.08);border-left:3px solid var(--purple);border-radius:0 6px 6px 0;font-size:0.73rem;">
+          <span style="color:var(--purple);font-weight:600;">Identity</span> <span style="color:var(--muted);">— SOUL.md</span>
+        </div>
+        <div style="padding:0.35rem 0.6rem;background:rgba(167,139,250,0.08);border-left:3px solid var(--purple);border-radius:0 6px 6px 0;font-size:0.73rem;">
+          <span style="color:var(--purple);font-weight:600;">Behavior</span> <span style="color:var(--muted);">— AGENTS.md</span>
+        </div>
+        <div style="padding:0.35rem 0.6rem;background:rgba(167,139,250,0.08);border-left:3px solid var(--purple);border-radius:0 6px 6px 0;font-size:0.73rem;">
+          <span style="color:var(--purple);font-weight:600;">Memory</span> <span style="color:var(--muted);">— memory/</span>
+        </div>
+        <div style="padding:0.35rem 0.6rem;background:rgba(167,139,250,0.08);border-left:3px solid var(--purple);border-radius:0 6px 6px 0;font-size:0.73rem;">
+          <span style="color:var(--purple);font-weight:600;">Skills</span> <span style="color:var(--muted);">— skills/</span>
+        </div>
+      </div>
+      <span class="preview-link"><span class="en">4-layer architecture &middot; Framework-agnostic &rarr;</span><span class="de">4-Schichten-Architektur &middot; Framework-agnostisch &rarr;</span></span>
+    </a>
+
   </div>
 </section>
 
