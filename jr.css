@@ -1,0 +1,29 @@
+/* Gemeinsamer Fuß + Darstellungs-Schalter (hell/dunkel/auto) für alle Kurse und Werkzeuge.
+   Einbinden NACH dem seiteneigenen CSS:
+   <link rel="stylesheet" href="https://janrummel.github.io/ai-learning/jr.css">
+   <script src="https://janrummel.github.io/ai-learning/jr.js"></script>   (im <head>, verhindert Aufblitzen)
+   Der Fuß nimmt die Farben der Seite (--text/--bg oder Starlight --sl-color-*); fest sind nur Punkt und Unterstreichung. */
+@font-face{font-family:'IBM Plex Mono';font-weight:400;font-display:swap;src:url(fonts/IBMPlexMono-Regular.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-weight:500;font-display:swap;src:url(fonts/IBMPlexMono-Medium.woff2) format('woff2')}
+
+/* Modus für Seiten auf shared-style.css: gewählter Modus schlägt Systemvorgabe und lokales :root */
+:root[data-theme="light"]{--bg:#ffffff;--surface:#f6f8fa;--border:#d1d5db;--text:#1f2937;--muted:#6b7280;--accent:#1d4ed8;--green:#16a34a;--orange:#d97706;--purple:#7c3aed;--pink:#db2777;color-scheme:light}
+:root[data-theme="dark"]{--bg:#0d1117;--surface:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--green:#3fb950;--orange:#d29922;--purple:#a78bfa;--pink:#f778ba;color-scheme:dark}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#ffffff;--surface:#f6f8fa;--border:#d1d5db;--text:#1f2937;--muted:#6b7280;--accent:#1d4ed8;--green:#16a34a;--orange:#d97706;--purple:#7c3aed;--pink:#db2777;color-scheme:light}}
+
+/* Fuß */
+.jr-fuss{--jr-text:var(--text,var(--sl-color-white));--jr-bg:var(--bg,var(--sl-color-bg));--jr-muted:color-mix(in srgb,var(--jr-text) 72%,var(--jr-bg));
+  font:13px/1.6 'IBM Plex Mono',ui-monospace,monospace;padding:16px 24px;text-align:center;color:var(--jr-muted);
+  border-top:1px solid color-mix(in srgb,var(--jr-text) 18%,var(--jr-bg));margin-top:2rem}
+.jr-fuss a{color:var(--jr-text);text-decoration:underline;text-decoration-color:#C4472B;text-underline-offset:3px}
+.jr-fuss::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:#C4472B;margin-right:10px;vertical-align:1px}
+
+/* Schalter (wird von jr.js neben DE/EN gesetzt) */
+.jr-modus{display:inline-flex;gap:2px;margin-left:6px;padding-left:6px;border-left:1px solid var(--border,var(--sl-color-hairline))}
+.jr-modus button{font:500 12px 'IBM Plex Mono',ui-monospace,monospace;background:none;border:0;color:var(--muted,var(--sl-color-gray-3));cursor:pointer;padding:.3rem .5rem;font-size:14px;border-radius:6px;line-height:1}
+.jr-modus button[aria-pressed="true"],.lang-switch .jr-modus button[aria-pressed="true"]:hover{background:var(--accent,var(--sl-color-accent));color:var(--bg,var(--sl-color-bg))}
+.jr-modus button:focus-visible{outline:2px solid #C4472B;outline-offset:2px}
+.jr-modus-allein{position:fixed;top:1rem;right:1rem;z-index:100;background:var(--surface,var(--sl-color-bg-nav));border:1px solid var(--border,var(--sl-color-hairline));border-radius:8px;padding:.2rem;margin:0}
+
+/* Giscus-Überschrift trägt inline eine feste helle Farbe; im hellen Modus sonst unlesbar */
+.feedback-section h2{color:var(--text)!important}
