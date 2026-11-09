@@ -107,6 +107,10 @@ Open an issue in the relevant repo, or submit a pull request.
 **Jan Rummel** — Energy engineer + AI practitioner.
 [LinkedIn](https://linkedin.com/in/janrummel) · [GitHub](https://github.com/janrummel)
 
+## Publishing
+
+https://janrummel.github.io/ai-learning/ is served by GitHub Pages straight from branch `main`, folder `/`. No build step: the files are static HTML, CSS and JavaScript.
+
 ## License
 
 Each course has its own license — see the individual repos.
