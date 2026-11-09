@@ -7,9 +7,9 @@
 @font-face{font-family:'IBM Plex Mono';font-weight:500;font-display:swap;src:url(fonts/IBMPlexMono-Medium.woff2) format('woff2')}
 
 /* Modus für Seiten auf shared-style.css: gewählter Modus schlägt Systemvorgabe und lokales :root */
-:root[data-theme="light"]{--bg:#ffffff;--surface:#f6f8fa;--border:#d1d5db;--text:#1f2937;--muted:#6b7280;--accent:#1d4ed8;--green:#16a34a;--orange:#d97706;--purple:#7c3aed;--pink:#db2777;color-scheme:light}
-:root[data-theme="dark"]{--bg:#0d1117;--surface:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--green:#3fb950;--orange:#d29922;--purple:#a78bfa;--pink:#f778ba;color-scheme:dark}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#ffffff;--surface:#f6f8fa;--border:#d1d5db;--text:#1f2937;--muted:#6b7280;--accent:#1d4ed8;--green:#16a34a;--orange:#d97706;--purple:#7c3aed;--pink:#db2777;color-scheme:light}}
+:root[data-theme="light"]{--bg:#ffffff;--surface:#f6f8fa;--border:#d1d5db;--text:#1f2937;--muted:#4b5563;--accent:#1d4ed8;--green:#166534;--orange:#92400e;--purple:#6d28d9;--red:#b91c1c;--pink:#be185d;color-scheme:light}
+:root[data-theme="dark"]{--bg:#0d1117;--surface:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--green:#3fb950;--orange:#d29922;--purple:#a78bfa;--red:#ff7b72;--pink:#f778ba;color-scheme:dark}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#ffffff;--surface:#f6f8fa;--border:#d1d5db;--text:#1f2937;--muted:#4b5563;--accent:#1d4ed8;--green:#166534;--orange:#92400e;--purple:#6d28d9;--red:#b91c1c;--pink:#be185d;color-scheme:light}}
 
 /* Fuß */
 .jr-fuss{--jr-text:var(--text,var(--sl-color-white));--jr-bg:var(--bg,var(--sl-color-bg));--jr-muted:color-mix(in srgb,var(--jr-text) 72%,var(--jr-bg));
